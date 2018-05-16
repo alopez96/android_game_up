@@ -1,19 +1,25 @@
 package ca.alexbalt.gameup2;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MessagesActivity extends AppCompatActivity {
@@ -50,6 +57,8 @@ public class MessagesActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
+    private FirebaseAuth mAuth;
+
 
 
     @Override
@@ -61,6 +70,9 @@ public class MessagesActivity extends AppCompatActivity {
 
         //initialize Firebase components
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseAuth = FirebaseAuth.getInstance();
+
+        mAuth = FirebaseAuth.getInstance();
 
         mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages");
 
@@ -152,9 +164,63 @@ public class MessagesActivity extends AppCompatActivity {
 
         mMessagesDatabaseReference.addChildEventListener(mChildEventListener);
 
+
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null){
+                    //user is signed in
+                    Toast.makeText(MessagesActivity.this,"Now signed in!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    //user is signed out
+                    startActivityForResult(
+                            AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(Arrays.asList(
+                                    new AuthUI.IdpConfig.EmailBuilder().build(),
+                                    new AuthUI.IdpConfig.GoogleBuilder().build()))
+                                    .build(),
+                            RC_SIGN_IN);
+                }
+            }
+        };
+
     }
 
 
 
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        //ad listener
+        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        //remove listener
+        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+    }
+
+
+
+
+/*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+*/
 
 }
