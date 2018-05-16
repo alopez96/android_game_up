@@ -3,11 +3,15 @@ package ca.alexbalt.gameup2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "main_activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +48,15 @@ public class MainActivity extends AppCompatActivity {
        }
 
        if(id == R.id.action_messages){
-           Intent messagesIntent = new Intent(MainActivity.this, MessagesActivity.class);
-           startActivity(messagesIntent);
+           Toast.makeText(getApplicationContext(),"messages page",Toast.LENGTH_SHORT).show();
+           Intent i = new Intent(MainActivity.this, MessagesActivity.class);
+           if(i == null){
+               Log.d(TAG, "intent null");
+               Toast.makeText(getApplicationContext(), "intent null", Toast.LENGTH_SHORT).show();
+           }
+           else if(i != null){
+               startActivity(i);
+           }
 
        }
 
@@ -56,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
        }
        return super.onOptionsItemSelected(item);
    }
+
 
 
    
