@@ -7,14 +7,44 @@
     tools:context=".EventActivity">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/textView8"
+        android:layout_width="304dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="19dp"
+        android:background="#53d2f03e"
+        android:text="Smash Bros Tournament Hosted by You \n\n Tuesday, May 27,2018\n\n Time- 6:00PM Central Time\n\nLocatoin: Hitchcock Lounge"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="68dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="19dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:srcCompat="@drawable/sammy_slug" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="196dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="129dp"
-        android:layout_marginStart="129dp"
-        android:layout_marginTop="208dp"
-        android:text="EVENTSSS"
-        android:textSize="30sp"
+        android:text="Past Events"
+        app:layout_constraintEnd_toStartOf="@+id/button4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="193dp"
+        android:layout_height="wrap_content"
+        android:text="Upcoming Events"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

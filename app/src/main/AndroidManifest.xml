@@ -20,7 +20,9 @@
         <activity android:name=".NotificationActivity" />
         <activity android:name=".EventActivity" />
         <activity android:name=".MessagesActivity" />
-        <activity android:name=".AccountActivity"></activity>
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".PostActivity" />
+        <activity android:name=".FilterOptions" ></activity>
 
     </application>
 

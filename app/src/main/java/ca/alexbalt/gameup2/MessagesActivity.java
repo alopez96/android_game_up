@@ -1,11 +1,13 @@
 package ca.alexbalt.gameup2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -203,6 +205,56 @@ public class MessagesActivity extends AppCompatActivity {
         super.onPause();
         //remove listener
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if(id == R.id.action_home){
+            Intent homeIntent = new Intent(MessagesActivity.this, HomeActivity.class);
+            startActivity(homeIntent);
+
+        }
+
+        if(id == R.id.action_notification){
+            Intent notificationIntent = new Intent(MessagesActivity.this, NotificationActivity.class);
+            startActivity(notificationIntent);
+
+        }
+
+        if(id == R.id.action_events){
+            Intent eventsIntent = new Intent(MessagesActivity.this, EventActivity.class);
+            startActivity(eventsIntent);
+        }
+
+        if(id == R.id.action_messages){
+            Toast.makeText(getApplicationContext(),"messages page",Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(MessagesActivity.this, MessagesActivity.class);
+            if(i == null){
+                Log.d(TAG, "intent null");
+                Toast.makeText(getApplicationContext(), "intent null", Toast.LENGTH_SHORT).show();
+            }
+            else if(i != null){
+                startActivity(i);
+            }
+
+        }
+
+        if(id == R.id.action_account){
+            Intent accountIntent = new Intent(MessagesActivity.this, AccountActivity.class);
+            startActivity(accountIntent);
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

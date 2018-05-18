@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "main_activity";
 
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseAuth mAuth;
