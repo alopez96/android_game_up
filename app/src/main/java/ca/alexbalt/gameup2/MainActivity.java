@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-
         mAuth = FirebaseAuth.getInstance();
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -60,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
    public boolean onCreateOptionsMenu(Menu menu){
-
        MenuInflater inflater = getMenuInflater();
        inflater.inflate(R.menu.menu, menu);
        return true;
@@ -75,18 +73,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(homeIntent);
 
         }
-
        if(id == R.id.action_notification){
            Intent notificationIntent = new Intent(MainActivity.this, NotificationActivity.class);
            startActivity(notificationIntent);
 
        }
-
        if(id == R.id.action_events){
            Intent eventsIntent = new Intent(MainActivity.this, EventActivity.class);
            startActivity(eventsIntent);
        }
-
        if(id == R.id.action_messages){
            Toast.makeText(getApplicationContext(),"messages page",Toast.LENGTH_SHORT).show();
            Intent i = new Intent(MainActivity.this, MessagesActivity.class);
@@ -99,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
            }
 
        }
-
        if(id == R.id.action_account){
            Intent accountIntent = new Intent(MainActivity.this, AccountActivity.class);
            startActivity(accountIntent);
@@ -107,9 +101,6 @@ public class MainActivity extends AppCompatActivity {
        }
        return super.onOptionsItemSelected(item);
    }
-
-
-
 
 
 
