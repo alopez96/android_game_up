@@ -17,9 +17,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -37,9 +39,9 @@ public class MessagesActivity extends AppCompatActivity {
 
     private static final String TAG = "main_activity";
     private Button chatButton;
-    public static final String ANONYMOUS = "user1";
+    public static final String ANONYMOUS = "anonymous";
     public static final int DEFAULT_MSG_LENGTH_LIMIT = 1000;
-    public static final int RC_SIGN_IN = 123;     ///request code
+    public static final int RC_SIGN_IN = 1;     ///request code
     List<AuthUI.IdpConfig> providers;
 
 
@@ -140,31 +142,7 @@ public class MessagesActivity extends AppCompatActivity {
 
 
 
-        mChildEventListener = new ChildEventListener() {
-            @Override //called when new message is inserted in the messages list
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                FriendlyMessage friendlyMessage = dataSnapshot.getValue(FriendlyMessage.class);
-                mMessageAdapter.add(friendlyMessage);
-            }
 
-            @Override   //contents of existing message gets changed
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override   //existing message is deleted
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override      //if message changes position
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override   //error occured (usually when you dont have permission
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        };
-
-        mMessagesDatabaseReference.addChildEventListener(mChildEventListener);
 
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -174,9 +152,11 @@ public class MessagesActivity extends AppCompatActivity {
                 if(user != null){
                     //user is signed in
                     Toast.makeText(MessagesActivity.this,"Now signed in!", Toast.LENGTH_SHORT).show();
+                    onSignedInInitialize(user.getDisplayName());
                 }
                 else {
                     //user is signed out
+                    onSignedOutCleanup();
                     startActivityForResult(
                             AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(Arrays.asList(
                                     new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -191,6 +171,20 @@ public class MessagesActivity extends AppCompatActivity {
 
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RC_SIGN_IN){
+            if(resultCode == RESULT_OK){
+                //signed in succeeded, set up UI
+                Toast.makeText(MessagesActivity.this, "signed in!", Toast.LENGTH_SHORT).show();
+            } else if(requestCode == RESULT_CANCELED){
+                //sign in was cancelled, finish activity
+                Toast.makeText(MessagesActivity.this, "sign in cancelled", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+    }
 
     @Override
     protected void onResume(){
@@ -204,7 +198,11 @@ public class MessagesActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         //remove listener
-        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+        if(mAuthStateListener != null) {
+            mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+        }
+        detachDatabaseReadListener();
+        mMessageAdapter.clear();
     }
 
     @Override
@@ -246,13 +244,16 @@ public class MessagesActivity extends AppCompatActivity {
             else if(i != null){
                 startActivity(i);
             }
-
         }
 
         if(id == R.id.action_account){
             Intent accountIntent = new Intent(MessagesActivity.this, AccountActivity.class);
             startActivity(accountIntent);
+        }
 
+        if (id == R.id.sign_out_menu){
+            AuthUI.getInstance().signOut(this);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -260,19 +261,57 @@ public class MessagesActivity extends AppCompatActivity {
 
 
 
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
+    //set username
+    private void onSignedInInitialize(String username){
+        mUsername = username;
+        attachDatabaseReadListener();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+
+
+    private void onSignedOutCleanup(){
+        mUsername = ANONYMOUS;
+        mMessageAdapter.clear();
+        detachDatabaseReadListener();
+
     }
 
-*/
+
+
+    private void attachDatabaseReadListener(){
+        if(mChildEventListener == null) {
+            mChildEventListener = new ChildEventListener() {
+                @Override //called when new message is inserted in the messages list
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    FriendlyMessage friendlyMessage = dataSnapshot.getValue(FriendlyMessage.class);
+                    mMessageAdapter.add(friendlyMessage);
+                }
+
+                @Override   //contents of existing message gets changed
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override   //existing message is deleted
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                }
+
+                @Override      //if message changes position
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override   //error occurred (usually when you dont have permission
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            };
+            mMessagesDatabaseReference.addChildEventListener(mChildEventListener);
+        }
+    }
+
+    private void detachDatabaseReadListener(){
+        if(mChildEventListener != null){
+            mMessagesDatabaseReference.removeEventListener(mChildEventListener);
+            mChildEventListener = null;
+        }
+    }
 
 }

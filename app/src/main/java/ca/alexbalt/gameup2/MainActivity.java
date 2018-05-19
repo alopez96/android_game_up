@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseAuth mAuth;
-    public static final int RC_SIGN_IN = 123;     ///request code
+    public static final int RC_SIGN_IN = 1;     ///request code
 
 
     @Override
@@ -54,9 +54,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-
     }
+
+
+    //supposed to exit app when the back button is pressed on login
+    //but doesn't work rn
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RC_SIGN_IN){
+            if(resultCode == RESULT_OK){
+                //signed in succeeded, set up UI
+                Toast.makeText(MainActivity.this, "signed in!", Toast.LENGTH_SHORT).show();
+            } else if(requestCode == RESULT_CANCELED){
+                //sign in was cancelled, finish activity
+                Toast.makeText(MainActivity.this, "sign in cancelled", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+    }
+
+
+
+
     @Override
    public boolean onCreateOptionsMenu(Menu menu){
        MenuInflater inflater = getMenuInflater();
@@ -99,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
            startActivity(accountIntent);
 
        }
+       if (id == R.id.sign_out_menu){
+           AuthUI.getInstance().signOut(this);
+           return true;
+       }
        return super.onOptionsItemSelected(item);
    }
 
@@ -119,5 +143,5 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
     }
 
-   
+
 }
