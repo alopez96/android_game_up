@@ -30,7 +30,7 @@ public class AccountActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_home){
-            Intent homeIntent = new Intent(AccountActivity.this, HomeActivity.class);
+            Intent homeIntent = new Intent(AccountActivity.this, MainActivity.class);
             startActivity(homeIntent);
 
         }

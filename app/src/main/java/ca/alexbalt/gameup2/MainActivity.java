@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -21,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "main_activity";
 
 
+    private Button postButton;
+    private Button filterBttn;
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseAuth mAuth;
@@ -31,6 +36,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        postButton = findViewById(R.id.post_button);
+        filterBttn = findViewById(R.id.filter_home);
+
+        postButton = findViewById(R.id.post_button);
+        filterBttn = findViewById(R.id.filter_home);
+
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPostActivity();
+            }
+        });
+        filterBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFilterActivity();
+            }
+        });
+
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPostActivity();
+            }
+        });
+        filterBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFilterActivity();
+            }
+        });
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -89,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_home){
-            Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
+            Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
             startActivity(homeIntent);
 
         }
@@ -125,6 +162,17 @@ public class MainActivity extends AppCompatActivity {
        }
        return super.onOptionsItemSelected(item);
    }
+
+    public void openPostActivity(){
+        Intent i = new Intent(this, PostActivity.class);
+        startActivity(i);
+
+    }
+
+    public void openFilterActivity(){
+        Intent i = new Intent(this, FilterOptions.class);
+        startActivity(i);
+    }
 
 
 

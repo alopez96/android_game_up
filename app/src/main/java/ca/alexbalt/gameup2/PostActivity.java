@@ -25,7 +25,7 @@ public class PostActivity extends AppCompatActivity {
 
 
     public void openPostActivity() {
-        Intent i = new Intent(this, HomeActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
 
     }
