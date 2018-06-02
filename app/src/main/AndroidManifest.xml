@@ -21,7 +21,8 @@
         <activity android:name=".MessagesActivity" />
         <activity android:name=".AccountActivity" />
         <activity android:name=".PostActivity" />
-        <activity android:name=".FilterOptions"> </activity>
+        <activity android:name=".FilterOptions"/>
+        <activity android:name=".SpecificEventActivity"/>
 
     </application>
 
