@@ -268,7 +268,7 @@ public class MessagesActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_home){
-            Intent homeIntent = new Intent(MessagesActivity.this, HomeActivity.class);
+            Intent homeIntent = new Intent(MessagesActivity.this, MainActivity.class);
             startActivity(homeIntent);
 
         }

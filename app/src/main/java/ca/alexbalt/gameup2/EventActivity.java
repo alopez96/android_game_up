@@ -31,7 +31,7 @@ public class EventActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_home){
-            Intent homeIntent = new Intent(EventActivity.this, HomeActivity.class);
+            Intent homeIntent = new Intent(EventActivity.this, MainActivity.class);
             startActivity(homeIntent);
 
         }

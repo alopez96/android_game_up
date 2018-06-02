@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,44 +7,39 @@
     tools:context=".EventActivity">
 
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="304dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="19dp"
-        android:background="#53d2f03e"
-        android:text="Smash Bros Tournament Hosted by You \n\n Tuesday, May 27,2018\n\n Time- 6:00PM Central Time\n\nLocatoin: Hitchcock Lounge"
-        android:textColor="#000000"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="68dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="19dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:srcCompat="@drawable/sammy_slug" />
+        android:id="@+id/textView11"
+        android:layout_width="265dp"
+        android:layout_height="39dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button"
+        android:layout_marginStart="11dp"
+        android:text="No current events" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="196dp"
+        android:layout_width="174dp"
         android:layout_height="wrap_content"
-        android:text="Past Events"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="Past Events" />
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="193dp"
+        android:layout_width="174dp"
         android:layout_height="wrap_content"
-        android:text="Upcoming Events"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Upcoming Events" />
 
-</android.support.constraint.ConstraintLayout>
+    <ListView
+        android:id="@+id/event_post"
+        android:layout_width="match_parent"
+        android:layout_height="463dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:scrollbars="vertical" >
+
+    </ListView>
+
+</RelativeLayout>
