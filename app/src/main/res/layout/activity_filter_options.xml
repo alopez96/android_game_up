@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/user_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/user_email_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
@@ -27,10 +27,10 @@
         android:layout_marginTop="58dp"
         android:text="Console:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
@@ -38,7 +38,7 @@
         android:layout_marginTop="46dp"
         android:text="Game:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/user_email_tv" />
 
     <TextView
         android:id="@+id/textView6"
@@ -49,7 +49,7 @@
         android:layout_marginTop="44dp"
         android:text="Distance:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/enter_to_home"
@@ -66,7 +66,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="52dp"
@@ -74,11 +74,11 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        app:layout_constraintStart_toStartOf="@+id/user_name"
-        app:layout_constraintTop_toBottomOf="@+id/user_name" />
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/console_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="1dp"
@@ -87,8 +87,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="(e.g., PS4, PC etc.)"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintStart_toEndOf="@+id/user_email_tv"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
 
     <EditText
         android:id="@+id/editText4"
@@ -100,8 +100,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="(e.g., Super Smash Bros, Fifa)"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/console_tv" />
 
     <EditText
         android:id="@+id/editText5"

@@ -1,13 +1,39 @@
 package ca.alexbalt.gameup2;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Arrays;
 
 public class PostActivity extends AppCompatActivity {
     private Button postButton;
+
+    public static final int RC_SIGN_IN = 1;     ///request code
+    private FirebaseDatabase mFirebaseDatabase;             //entry point for our app to access the database
+    private DatabaseReference mEventsReference;
+    private EditText descEditText;
+    private EditText titleText;
+    private EditText consoleText;
+    private EditText gameText;
+    private EditText dateText;
+    private EditText idText;
+    private String a, b, c, game, date;
+    private String mUserEmail;
+    private String mUsername;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +47,22 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mEventsReference = mFirebaseDatabase.getReference().child("events");
+
+        descEditText = findViewById(R.id.desc_tv);
+        titleText = findViewById(R.id.title_tv);
+        consoleText = findViewById(R.id.console_tv);
+        gameText = findViewById(R.id.game_tv);
+        dateText = findViewById(R.id.date_tv);
+
+        //event eventName = new event(a,b,c);
+
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        mUsername = user.getDisplayName();
+        mUserEmail = user.getEmail();
+
     }
 
 
@@ -28,5 +70,27 @@ public class PostActivity extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
 
+        a = descEditText.getText().toString();
+        b = titleText.getText().toString();
+        c = consoleText.getText().toString();
+        game = gameText.getText().toString();
+        date = dateText.getText().toString();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("events");
+
+        DatabaseReference eventRef = database.getReference("events");
+
+        String key = myRef.push().getKey();
+        eventRef.child(key).child("description").setValue(a);
+        eventRef.child(key).child("creator").setValue(mUsername);
+        eventRef.child(key).child("title").setValue(b);
+        eventRef.child(key).child("console").setValue(c);
+        eventRef.child(key).child("date").setValue(date);
+        eventRef.child(key).child("game").setValue(game);
+        eventRef.child(key).child("attendees").child("user1").setValue("true");
+        eventRef.child(key).child("attendees").child("user2").setValue("false");
+
     }
+
 }
