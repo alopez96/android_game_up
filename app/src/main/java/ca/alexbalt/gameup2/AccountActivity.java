@@ -7,14 +7,34 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AccountActivity extends AppCompatActivity {
     private static final String TAG = "main_activity";
+    private TextView nameTextView;
+    private TextView emailTextView;
+
+    private String mUsername;
+    private String mUserEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+
+        // Initialize references to views
+        nameTextView = (TextView) findViewById(R.id.user_name_tv);
+        emailTextView = (TextView) findViewById(R.id.user_email_tv);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        mUsername = user.getDisplayName();
+        mUserEmail = user.getEmail();
+
+        nameTextView.setText(mUsername);
+        emailTextView.setText(mUserEmail);
     }
 
     @Override

@@ -26,8 +26,10 @@ public class PostActivity extends AppCompatActivity {
     private EditText descEditText;
     private EditText titleText;
     private EditText consoleText;
+    private EditText gameText;
+    private EditText dateText;
     private EditText idText;
-    private String a, b, c, id;
+    private String a, b, c, game, date;
     private String mUserEmail;
     private String mUsername;
     private FirebaseAuth mFirebaseAuth;
@@ -52,13 +54,15 @@ public class PostActivity extends AppCompatActivity {
         descEditText = findViewById(R.id.desc_tv);
         titleText = findViewById(R.id.title_tv);
         consoleText = findViewById(R.id.console_tv);
-        idText = findViewById(R.id.id_tv);
+        gameText = findViewById(R.id.game_tv);
+        dateText = findViewById(R.id.date_tv);
 
         //event eventName = new event(a,b,c);
 
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         mUsername = user.getDisplayName();
         mUserEmail = user.getEmail();
+
     }
 
 
@@ -69,25 +73,23 @@ public class PostActivity extends AppCompatActivity {
         a = descEditText.getText().toString();
         b = titleText.getText().toString();
         c = consoleText.getText().toString();
-        id = idText.getText().toString();
+        game = gameText.getText().toString();
+        date = dateText.getText().toString();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("events");
 
         DatabaseReference eventRef = database.getReference("events");
-        eventRef.child("event3").child("description").setValue(a);
-        eventRef.child("event3").child("creator").setValue(mUsername);
-        eventRef.child("event3").child("title").setValue(b);
-        eventRef.child("event3").child("console").setValue(c);
-        eventRef.child("event3").child("attendees").child("user1").setValue("true");
-        eventRef.child("event3").child("attendees").child("user2").setValue("false");
 
-        eventRef.child(id).child("description").setValue(a);
-        eventRef.child(id).child("creator").setValue(mUsername);
-        eventRef.child(id).child("title").setValue(b);
-        eventRef.child(id).child("console").setValue(c);
-        eventRef.child(id).child("attendees").child("user1").setValue("true");
-        eventRef.child(id).child("attendees").child("user2").setValue("false");
+        String key = myRef.push().getKey();
+        eventRef.child(key).child("description").setValue(a);
+        eventRef.child(key).child("creator").setValue(mUsername);
+        eventRef.child(key).child("title").setValue(b);
+        eventRef.child(key).child("console").setValue(c);
+        eventRef.child(key).child("date").setValue(date);
+        eventRef.child(key).child("game").setValue(game);
+        eventRef.child(key).child("attendees").child("user1").setValue("true");
+        eventRef.child(key).child("attendees").child("user2").setValue("false");
 
     }
 
