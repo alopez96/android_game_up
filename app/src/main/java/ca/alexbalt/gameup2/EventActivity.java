@@ -117,7 +117,7 @@ public class EventActivity extends AppCompatActivity {
         mEventsReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                a = String.valueOf(dataSnapshot.child("event1").child("name").getValue(String.class));
+                a = String.valueOf(dataSnapshot.child("event3").child("title").getValue(String.class));
             }
 
             @Override
@@ -134,7 +134,7 @@ public class EventActivity extends AppCompatActivity {
         String[] listItems = new String[aSize];
         for(int i = 0; i < aSize; i++){
             if(a == null)
-                listItems[i] = mEventsReference.child("event" + i).child("name").getKey();
+                listItems[i] = mEventsReference.child("event").child("title").getKey();
             else
                 listItems[i] = a;
         }

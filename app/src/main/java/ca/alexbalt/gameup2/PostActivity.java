@@ -24,7 +24,10 @@ public class PostActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;             //entry point for our app to access the database
     private DatabaseReference mEventsReference;
     private EditText descEditText;
-    private String a, b, c;
+    private EditText titleText;
+    private EditText consoleText;
+    private EditText idText;
+    private String a, b, c, id;
     private String mUserEmail;
     private String mUsername;
     private FirebaseAuth mFirebaseAuth;
@@ -47,8 +50,11 @@ public class PostActivity extends AppCompatActivity {
         mEventsReference = mFirebaseDatabase.getReference().child("events");
 
         descEditText = findViewById(R.id.desc_tv);
+        titleText = findViewById(R.id.title_tv);
+        consoleText = findViewById(R.id.console_tv);
+        idText = findViewById(R.id.id_tv);
 
-        event eventName = new event(a,b,c);
+        //event eventName = new event(a,b,c);
 
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         mUsername = user.getDisplayName();
@@ -61,6 +67,9 @@ public class PostActivity extends AppCompatActivity {
         startActivity(i);
 
         a = descEditText.getText().toString();
+        b = titleText.getText().toString();
+        c = consoleText.getText().toString();
+        id = idText.getText().toString();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("events");
@@ -68,9 +77,18 @@ public class PostActivity extends AppCompatActivity {
         DatabaseReference eventRef = database.getReference("events");
         eventRef.child("event3").child("description").setValue(a);
         eventRef.child("event3").child("creator").setValue(mUsername);
-        eventRef.child("event3").child("name").setValue("ganging");
+        eventRef.child("event3").child("title").setValue(b);
+        eventRef.child("event3").child("console").setValue(c);
         eventRef.child("event3").child("attendees").child("user1").setValue("true");
         eventRef.child("event3").child("attendees").child("user2").setValue("false");
+
+        eventRef.child(id).child("description").setValue(a);
+        eventRef.child(id).child("creator").setValue(mUsername);
+        eventRef.child(id).child("title").setValue(b);
+        eventRef.child(id).child("console").setValue(c);
+        eventRef.child(id).child("attendees").child("user1").setValue("true");
+        eventRef.child(id).child("attendees").child("user2").setValue("false");
+
     }
 
 }
