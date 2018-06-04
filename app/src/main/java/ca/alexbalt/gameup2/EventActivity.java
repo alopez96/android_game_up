@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class EventActivity extends AppCompatActivity {
@@ -41,6 +42,7 @@ public class EventActivity extends AppCompatActivity {
 
     private TextView test;
     private ArrayList<String> mEvents = new ArrayList<>();
+    private List<event> List;
     private ListView eventList;
 
 
@@ -50,11 +52,13 @@ public class EventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_events);
 
         //ListView list = findViewById(R.id.event_post);
-        eventList = (ListView)findViewById(R.id.event_post);
+        eventList = findViewById(R.id.event_post);
         TextView text = findViewById(R.id.nothing_tv);
         text.setVisibility(View.INVISIBLE);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mEventsReference = mFirebaseDatabase.getReference().child("events");
+
+        List = new ArrayList<>();
 /*
         Intent intent = getIntent();
         key = intent.getStringExtra("data");
@@ -124,17 +128,20 @@ public class EventActivity extends AppCompatActivity {
                 listItems[i] = mEventsReference.child(key).child("title").getKey();
             else
                 listItems[i] = a;
-        }
+        }*/
         // Show the list view with the each list item an element from listItems
-        final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mEvents);
-        eventList.setAdapter(adapter);
+        //final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mEvents);
+        //eventList.setAdapter(adapter);
+
+
+
 
         mEventsReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String value = dataSnapshot.getValue(String.class);
-                mEvents.add(value);
-                adapter.notifyDataSetChanged();
+                //String value = dataSnapshot.getValue(String.class);
+                //mEvents.add(value);
+                //adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -156,7 +163,7 @@ public class EventActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });*/
+        });
     /*
         // Set an OnItemClickListener for each of the list items
         final Context context = this;

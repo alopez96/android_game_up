@@ -9,14 +9,24 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,11 +35,16 @@ public class MainActivity extends AppCompatActivity {
 
     private Button postButton;
     private Button filterBttn;
+    private FirebaseDatabase mFirebaseDatabase;             //entry point for our app to access the database
+    private DatabaseReference mEventsReference;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseAuth mAuth;
     public static final int RC_SIGN_IN = 1;     ///request code
+
+    ListView listViewEvents;
+    List<event> eventList;
 
 
     @Override
@@ -38,23 +53,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         postButton = findViewById(R.id.post_button);
-        filterBttn = findViewById(R.id.filter_home);
 
-        postButton = findViewById(R.id.post_button);
-        filterBttn = findViewById(R.id.filter_home);
-
-        postButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPostActivity();
-            }
-        });
-        filterBttn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFilterActivity();
-            }
-        });
+        listViewEvents =findViewById(R.id.listViewEvents);
+        //TextView text = findViewById(R.id.nothing_tv);
+        //text.setVisibility(View.INVISIBLE);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mEventsReference = mFirebaseDatabase.getReference().child("events");
+        eventList = new ArrayList<>();
 
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,12 +67,13 @@ public class MainActivity extends AppCompatActivity {
                 openPostActivity();
             }
         });
-        filterBttn.setOnClickListener(new View.OnClickListener() {
+        /*filterBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFilterActivity();
             }
-        });
+        });*/
+
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -189,6 +195,27 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         //remove listener
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+    }
+
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        mEventsReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                eventList.clear();
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    event Event = snapshot.getValue(event.class);
+                    eventList.add(Event);
+                }
+                EventList adapter = new EventList(MainActivity.this, eventList);
+                listViewEvents.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
 

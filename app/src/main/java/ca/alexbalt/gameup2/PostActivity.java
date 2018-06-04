@@ -84,10 +84,10 @@ public class PostActivity extends AppCompatActivity {
             event Event = new event(b, c, game, date, a, key);
             myRef.child(key).setValue(Event);
             Toast.makeText(this, "event added",Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(this, EventActivity.class);
+            //Intent i = new Intent(this, EventActivity.class);
             Intent intent = new Intent(PostActivity.this, MainActivity.class);
             Toast.makeText(PostActivity.this,"post key "+ key,Toast.LENGTH_LONG).show();
-            i.putExtra("data", key);  // pass your values and retrieve them in the other Activity using keyName
+            //i.putExtra("data", key);  // pass your values and retrieve them in the other Activity using keyName
             startActivity(intent);
 
         }else{
