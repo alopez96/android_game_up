@@ -1,9 +1,11 @@
 package ca.alexbalt.gameup2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,30 +69,30 @@ public class PostActivity extends AppCompatActivity {
 
 
     public void openPostActivity() {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-
         a = descEditText.getText().toString();
         b = titleText.getText().toString();
         c = consoleText.getText().toString();
         game = gameText.getText().toString();
         date = dateText.getText().toString();
+        if(!TextUtils.isEmpty(b)){
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("events");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("events");
+            DatabaseReference eventRef = database.getReference("events");
 
-        DatabaseReference eventRef = database.getReference("events");
+            String key = myRef.push().getKey();
+            event Event = new event(b, c, game, date, a, key);
+            myRef.child(key).setValue(Event);
+            Toast.makeText(this, "event added",Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, EventActivity.class);
+            Intent intent = new Intent(PostActivity.this, MainActivity.class);
+            Toast.makeText(PostActivity.this,"post key "+ key,Toast.LENGTH_LONG).show();
+            i.putExtra("data", key);  // pass your values and retrieve them in the other Activity using keyName
+            startActivity(intent);
 
-        String key = myRef.push().getKey();
-        eventRef.child(key).child("description").setValue(a);
-        eventRef.child(key).child("creator").setValue(mUsername);
-        eventRef.child(key).child("title").setValue(b);
-        eventRef.child(key).child("console").setValue(c);
-        eventRef.child(key).child("date").setValue(date);
-        eventRef.child(key).child("game").setValue(game);
-        eventRef.child(key).child("attendees").child("user1").setValue("true");
-        eventRef.child(key).child("attendees").child("user2").setValue("false");
-
+        }else{
+            Toast.makeText(this, "enter a title",Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
