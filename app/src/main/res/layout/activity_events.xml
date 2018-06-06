@@ -12,7 +12,7 @@
         android:layout_height="37dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="84dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="19dp"
         android:text="title"
         android:textSize="24sp" />
@@ -23,7 +23,7 @@
         android:layout_height="42dp"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/titleTV"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="82dp"
         android:text="console"
         android:textSize="24sp" />
 
@@ -32,21 +32,19 @@
         android:id="@+id/gameTV"
         android:layout_width="146dp"
         android:layout_height="42dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/titleTV"
-        android:layout_marginTop="143dp"
+        android:layout_alignStart="@+id/dateTV"
+        android:layout_alignTop="@+id/consoleTV"
         android:text="game"
-        android:textSize="24sp"
-        android:layout_alignLeft="@+id/titleTV" />
+        android:textSize="24sp" />
 
 
     <TextView
         android:id="@+id/dateTV"
         android:layout_width="146dp"
         android:layout_height="42dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/titleTV"
-        android:layout_marginTop="201dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/titleTV"
+        android:layout_marginEnd="39dp"
         android:text="date"
         android:textSize="24sp" />
 
@@ -54,36 +52,31 @@
         android:id="@+id/creatorTV"
         android:layout_width="146dp"
         android:layout_height="42dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/titleTV"
-        android:layout_marginBottom="207dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/gameTV"
+        android:layout_marginTop="145dp"
         android:text="creator"
-        android:textSize="24sp"
-        android:layout_alignLeft="@+id/titleTV" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/descTV"
         android:layout_width="268dp"
         android:layout_height="86dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/titleTV"
-        android:layout_marginBottom="111dp"
+        android:layout_above="@+id/joinedLV"
+        android:layout_centerHorizontal="true"
         android:text="description"
-        android:textSize="24sp"
-        android:layout_alignLeft="@+id/titleTV" />
+        android:textSize="24sp" />
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/joinB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="48dp"
-        android:layout_marginStart="113dp"
-        android:text="Add event"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="113dp" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="17dp"
+        android:layout_marginEnd="15dp"
+        android:text="join event" />
 
     <TextView
         android:id="@+id/textView3"
@@ -93,4 +86,17 @@
         android:layout_alignParentStart="true"
         android:text="created by"
         android:layout_alignParentLeft="true" />
+
+    <ListView
+        android:id="@+id/joinedLV"
+        android:layout_width="match_parent"
+        android:layout_height="156dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="73dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/post_button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"></ListView>
+
 </RelativeLayout>

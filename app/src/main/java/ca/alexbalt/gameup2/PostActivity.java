@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PostActivity extends AppCompatActivity {
@@ -75,21 +76,20 @@ public class PostActivity extends AppCompatActivity {
         c = consoleText.getText().toString();
         game = gameText.getText().toString();
         date = dateText.getText().toString();
+        ArrayList<String> joinedList = new ArrayList<>();
+        joinedList.add("");
+
 
         if(!TextUtils.isEmpty(b)){
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("events");
-
-            //DatabaseReference eventRef = database.getReference("events");
-
             String key = myRef.push().getKey();
-            event Event = new event(b, c, game, date, a, key, creator);
+            event Event = new event(b, c, game, date, a, key, creator, joinedList);
             myRef.child(key).setValue(Event);
             Toast.makeText(this, "event added",Toast.LENGTH_SHORT).show();
             Intent i = new Intent(this, EventActivity.class);
-            //Intent intent = new Intent(PostActivity.this, MainActivity.class);
             Toast.makeText(PostActivity.this,"post key "+ key,Toast.LENGTH_LONG).show();
-            i.putExtra("data", key);  // pass your values and retrieve them in the other Activity using keyName
+            i.putExtra("data", key);  // pass your values and retrieve them in the other Activity using data
             startActivity(i);
 
         }else{

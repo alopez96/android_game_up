@@ -3,6 +3,7 @@ package ca.alexbalt.gameup2;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,17 +17,24 @@ public class event {
     public String body;
     public String id;
     public String creator;
+    ArrayList<String> joinedList = new ArrayList<>();
+
 
     private event() {}
 
-    public event(String title, String console, String game, String date, String body, String id, String creator) {
+
+    public event(String title, String console, String game, String date, String body, String id,
+                 String creator, ArrayList<String> joinedList)
+    {
         this.title = title;
         this.console = console;
         this.game = game;
+
         this.date = date;
         this.body = body;
         this.id = id;
         this.creator = creator;
+        this.joinedList = joinedList;
     }
 
 
@@ -53,4 +61,8 @@ public class event {
     public String getId() {return id;}
 
     public String getCreator() {return creator;}
+
+    public ArrayList<String> getJoinedList() {
+        return joinedList;
+    }
 }

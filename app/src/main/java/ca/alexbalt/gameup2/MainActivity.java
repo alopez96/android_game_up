@@ -36,14 +36,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     private Button postButton;
-    private Button filterBttn;
     private FirebaseDatabase mFirebaseDatabase;             //entry point for our app to access the database
     private DatabaseReference mEventsReference;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private FirebaseAuth mAuth;
+    private DatabaseReference mUserReference;
     public static final int RC_SIGN_IN = 1;     ///request code
+    private String mUsername;
+    private String mUserEmail;
 
     ListView listViewEvents;
     List<event> eventList;
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
         mEventsReference = mFirebaseDatabase.getReference().child("events");
         eventList = new ArrayList<>();
 
+
+
+
+
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+        mUserReference = mFirebaseDatabase.getReference().child("users");
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -81,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
                 if(user != null){
                     //user is signed in
                     Toast.makeText(MainActivity.this,"Now signed in!", Toast.LENGTH_SHORT).show();
+                    mUsername = user.getDisplayName();
+                    mUserEmail = user.getEmail();
+                    String uid = mUserReference.push().getKey();
+                    mUserReference.push().setValue(mUsername);
                 }
                 else {
                     //user is signed out
@@ -96,8 +105,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //supposed to exit app when the back button is pressed on login
-    //but doesn't work rn
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -142,17 +149,12 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //ListData selected = aList.get(position);
                 event selected = eventList.get(position);
-                String a = "hello";
-
                 // Create an Intent to reference our new activity, then call startActivity
                 // to transition into the new Activity.
                 Intent detailIntent = new Intent(MainActivity.this, EventActivity.class);
-                Intent i = new Intent(context, MainActivity.class);
-
                 // pass some key value pairs to the next Activity (via the Intent)
                 detailIntent.putExtra("data", selected.id);
                 Toast.makeText(MainActivity.this, "event key " + selected.id, Toast.LENGTH_SHORT).show();
-
                 startActivity(detailIntent);
                 }
             });

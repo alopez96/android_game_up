@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,10 +38,13 @@ public class EventActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;             //entry point for our app to access the database
     private DatabaseReference mEventsReference, specificEventRef;
     private DatabaseReference mPostReference;
-    private String title, console, game, date, creator, key;
-    private ValueEventListener mPostListener;
+    private FirebaseAuth mFirebaseAuth;
+    private String mUsername, key;
     TextView titleTextView, consoleTextView, gameTextView;
     TextView dateTextView, creatorTextView, descTextView;
+    ListView joinedListView;
+    List<String> listString;
+    private Button joinButton;
 
 
     @Override
@@ -54,20 +58,23 @@ public class EventActivity extends AppCompatActivity {
         dateTextView = findViewById(R.id.dateTV);
         creatorTextView = findViewById(R.id.creatorTV);
         descTextView = findViewById(R.id.descTV);
+        joinedListView = findViewById(R.id.joinedLV);
+        listString = new ArrayList<>();
+        joinButton = findViewById(R.id.joinB);
 
         //ListView list = findViewById(R.id.event_post);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mEventsReference = mFirebaseDatabase.getReference().child("events");
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        mUsername = user.getDisplayName();
 
         Intent intent = getIntent();
         key = intent.getStringExtra("data");
         if (key == null) {
             throw new IllegalArgumentException("Must pass EXTRA_POST_KEY");
         }
-        Toast.makeText(EventActivity.this, "intent key: " + key, Toast.LENGTH_SHORT).show();
         specificEventRef = mEventsReference.child(key);
-
-
     }
 
     @Override
@@ -83,9 +90,23 @@ public class EventActivity extends AppCompatActivity {
                     dateTextView.setText(Event.date);
                     creatorTextView.setText(Event.creator);
                     descTextView.setText(Event.body);
+                    listString = Event.joinedList;
+
+                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(EventActivity.this, android.R.layout.simple_list_item_1, listString);
+                joinedListView.setAdapter(adapter);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
+        joinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listString.add(mUsername);
+                specificEventRef.child("joinedList").setValue(listString);
+                Toast.makeText(EventActivity.this, "you have joined event " + titleTextView.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
