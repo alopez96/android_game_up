@@ -24,138 +24,69 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 public class EventActivity extends AppCompatActivity {
 
     private static final String TAG = "main_activity";
 
     private FirebaseDatabase mFirebaseDatabase;             //entry point for our app to access the database
     private DatabaseReference mEventsReference;
-    private DatabaseReference mReference;
-    private String a, b;
+    private DatabaseReference mPostReference;
+    private String title, console, game, date, creator, key;
+    private ValueEventListener mPostListener;
+    TextView titleTextView, consoleTextView, gameTextView;
+    TextView dateTextView, creatorTextView, descTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
-/*
-        ListView list = findViewById(R.id.event_post);
-        TextView text = findViewById(R.id.nothing_tv);
-        text.setVisibility(View.INVISIBLE);
+
+        titleTextView = findViewById(R.id.titleTV);
+        consoleTextView = findViewById(R.id.consoleTV);
+        gameTextView = findViewById(R.id.gameTV);
+        dateTextView = findViewById(R.id.dateTV);
+        creatorTextView = findViewById(R.id.creatorTV);
+        descTextView = findViewById(R.id.descTV);
+
+        //ListView list = findViewById(R.id.event_post);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mEventsReference = mFirebaseDatabase.getReference().child("events");
-        final DatabaseReference event1 = mEventsReference.child("event2");
-        mEventsReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                a = String.valueOf(dataSnapshot.child("event1").child("name").getValue(String.class));
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        Toast.makeText(EventActivity.this, "onCreate a: " + a, Toast.LENGTH_SHORT).show();
-        DataSnapshot dataSnapshot = null;
-        int aSize = 5;
-        String[] listItems = new String[aSize];
-        for(int i = 0; i < aSize; i++){
-            if(a == null)
-                listItems[i] = mEventsReference.child("event" + i).child("name").getKey();
-            else
-                listItems[i] = a;
+        Intent intent = getIntent();
+        key = intent.getStringExtra("data");
+        if (key == null) {
+            throw new IllegalArgumentException("Must pass EXTRA_POST_KEY");
         }
-        // Show the list view with the each list item an element from listItems
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-        list.setAdapter(adapter);
-
-        // Set an OnItemClickListener for each of the list items
-        final Context context = this;
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //ListData selected = aList.get(position);
-
-                // Create an Intent to reference our new activity, then call startActivity
-                // to transition into the new Activity.
-                //Intent detailIntent = new Intent(context, SpecificEventActivity.class);
+        Toast.makeText(EventActivity.this, "intent variable: " + key, Toast.LENGTH_SHORT).show();
 
 
-                //startActivity(detailIntent);
-            }
-        });*/
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        ListView list = findViewById(R.id.event_post);
-        TextView text = findViewById(R.id.nothing_tv);
-        text.setVisibility(View.INVISIBLE);
-
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mReference = mFirebaseDatabase.getReference().child("events");
-        mEventsReference = mFirebaseDatabase.getReference().child("events");
-        final String[] b = new String[5];
-        mReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    b[0] = String.valueOf(snapshot.child("creator").getValue(String.class));
-                    Log.i(TAG, String.valueOf(snapshot.child("creator").getValue(String.class)));
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
         mEventsReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                a = String.valueOf(dataSnapshot.child("event3").child("title").getValue(String.class));
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    event Event = snapshot.getValue(event.class);
+                    titleTextView.setText(Event.title);
+                    consoleTextView.setText(Event.console);
+                    gameTextView.setText(Event.game);
+                    dateTextView.setText(Event.date);
+                    creatorTextView.setText(Event.creator);
+                    descTextView.setText(Event.body);
+                }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        Toast.makeText(EventActivity.this, "onStart a: " + a, Toast.LENGTH_SHORT).show();
-        Toast.makeText(EventActivity.this, "onStart b: " + b[0], Toast.LENGTH_SHORT).show();
-
-
-        int aSize = 5;
-        String[] listItems = new String[aSize];
-        for(int i = 0; i < aSize; i++){
-            if(a == null)
-                listItems[i] = mEventsReference.child("event").child("title").getKey();
-            else
-                listItems[i] = a;
-        }
-        // Show the list view with the each list item an element from listItems
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-        list.setAdapter(adapter);
-
-        // Set an OnItemClickListener for each of the list items
-        final Context context = this;
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //ListData selected = aList.get(position);
-
-                // Create an Intent to reference our new activity, then call startActivity
-                // to transition into the new Activity.
-                //Intent detailIntent = new Intent(context, SpecificEventActivity.class);
-
-
-                //startActivity(detailIntent);
             }
         });
 
@@ -213,19 +144,6 @@ public class EventActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-
-    @Override
-    protected void onStop(){
-        super.onStop();
     }
 
 }
