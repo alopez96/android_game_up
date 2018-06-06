@@ -80,17 +80,17 @@ public class PostActivity extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("events");
 
-            DatabaseReference eventRef = database.getReference("events");
+            //DatabaseReference eventRef = database.getReference("events");
 
             String key = myRef.push().getKey();
             event Event = new event(b, c, game, date, a, key, creator);
             myRef.child(key).setValue(Event);
             Toast.makeText(this, "event added",Toast.LENGTH_SHORT).show();
-            //Intent i = new Intent(this, EventActivity.class);
-            Intent intent = new Intent(PostActivity.this, MainActivity.class);
+            Intent i = new Intent(this, EventActivity.class);
+            //Intent intent = new Intent(PostActivity.this, MainActivity.class);
             Toast.makeText(PostActivity.this,"post key "+ key,Toast.LENGTH_LONG).show();
-            //i.putExtra("data", key);  // pass your values and retrieve them in the other Activity using keyName
-            startActivity(intent);
+            i.putExtra("data", key);  // pass your values and retrieve them in the other Activity using keyName
+            startActivity(i);
 
         }else{
             Toast.makeText(this, "enter a title",Toast.LENGTH_SHORT).show();

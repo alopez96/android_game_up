@@ -35,7 +35,7 @@ public class EventActivity extends AppCompatActivity {
     private static final String TAG = "main_activity";
 
     private FirebaseDatabase mFirebaseDatabase;             //entry point for our app to access the database
-    private DatabaseReference mEventsReference;
+    private DatabaseReference mEventsReference, specificEventRef;
     private DatabaseReference mPostReference;
     private String title, console, game, date, creator, key;
     private ValueEventListener mPostListener;
@@ -64,7 +64,8 @@ public class EventActivity extends AppCompatActivity {
         if (key == null) {
             throw new IllegalArgumentException("Must pass EXTRA_POST_KEY");
         }
-        Toast.makeText(EventActivity.this, "intent variable: " + key, Toast.LENGTH_SHORT).show();
+        Toast.makeText(EventActivity.this, "intent key: " + key, Toast.LENGTH_SHORT).show();
+        specificEventRef = mEventsReference.child(key);
 
 
     }
@@ -72,18 +73,16 @@ public class EventActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        mEventsReference.addValueEventListener(new ValueEventListener() {
+        specificEventRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    event Event = snapshot.getValue(event.class);
+                    event Event = dataSnapshot.getValue(event.class);
                     titleTextView.setText(Event.title);
                     consoleTextView.setText(Event.console);
                     gameTextView.setText(Event.game);
                     dateTextView.setText(Event.date);
                     creatorTextView.setText(Event.creator);
                     descTextView.setText(Event.body);
-                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
