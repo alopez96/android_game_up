@@ -40,7 +40,7 @@ public class EventActivity extends AppCompatActivity {
     private String title, console, game, date, creator, key;
     private ValueEventListener mPostListener;
     TextView titleTextView, consoleTextView, gameTextView;
-    TextView dateTextView, creatorTextView;
+    TextView dateTextView, creatorTextView, descTextView;
 
 
     @Override
@@ -53,6 +53,7 @@ public class EventActivity extends AppCompatActivity {
         gameTextView = findViewById(R.id.gameTV);
         dateTextView = findViewById(R.id.dateTV);
         creatorTextView = findViewById(R.id.creatorTV);
+        descTextView = findViewById(R.id.descTV);
 
         //ListView list = findViewById(R.id.event_post);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -81,6 +82,7 @@ public class EventActivity extends AppCompatActivity {
                     gameTextView.setText(Event.game);
                     dateTextView.setText(Event.date);
                     creatorTextView.setText(Event.creator);
+                    descTextView.setText(Event.body);
                 }
             }
             @Override
