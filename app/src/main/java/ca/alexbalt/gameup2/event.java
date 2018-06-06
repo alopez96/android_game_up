@@ -15,17 +15,18 @@ public class event {
     public String date;
     public String body;
     public String id;
-
+    public String creator;
 
     private event() {}
 
-    public event(String title, String console, String game, String date, String body, String id) {
+    public event(String title, String console, String game, String date, String body, String id, String creator) {
         this.title = title;
         this.console = console;
         this.game = game;
         this.date = date;
         this.body = body;
         this.id = id;
+        this.creator = creator;
     }
 
 
@@ -49,7 +50,7 @@ public class event {
         return body;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() {return id;}
+
+    public String getCreator() {return creator;}
 }

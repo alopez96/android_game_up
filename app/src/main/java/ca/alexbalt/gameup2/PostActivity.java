@@ -31,7 +31,7 @@ public class PostActivity extends AppCompatActivity {
     private EditText gameText;
     private EditText dateText;
     private EditText idText;
-    private String a, b, c, game, date;
+    private String a, b, c, game, date, creator;
     private String mUserEmail;
     private String mUsername;
     private FirebaseAuth mFirebaseAuth;
@@ -64,6 +64,7 @@ public class PostActivity extends AppCompatActivity {
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         mUsername = user.getDisplayName();
         mUserEmail = user.getEmail();
+        creator = mUsername;
 
     }
 
@@ -74,6 +75,7 @@ public class PostActivity extends AppCompatActivity {
         c = consoleText.getText().toString();
         game = gameText.getText().toString();
         date = dateText.getText().toString();
+
         if(!TextUtils.isEmpty(b)){
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("events");
@@ -81,7 +83,7 @@ public class PostActivity extends AppCompatActivity {
             DatabaseReference eventRef = database.getReference("events");
 
             String key = myRef.push().getKey();
-            event Event = new event(b, c, game, date, a, key);
+            event Event = new event(b, c, game, date, a, key, creator);
             myRef.child(key).setValue(Event);
             Toast.makeText(this, "event added",Toast.LENGTH_SHORT).show();
             //Intent i = new Intent(this, EventActivity.class);

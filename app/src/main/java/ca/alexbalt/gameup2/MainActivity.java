@@ -1,5 +1,6 @@
 package ca.alexbalt.gameup2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -67,12 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 openPostActivity();
             }
         });
-        /*filterBttn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFilterActivity();
-            }
-        });*/
 
 
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -118,86 +114,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-    @Override
-   public boolean onCreateOptionsMenu(Menu menu){
-       MenuInflater inflater = getMenuInflater();
-       inflater.inflate(R.menu.menu, menu);
-       return true;
-   }
-
-   @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-
-        if(id == R.id.action_home){
-            Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
-            startActivity(homeIntent);
-
-        }
-       if(id == R.id.action_notification){
-           Intent notificationIntent = new Intent(MainActivity.this, NotificationActivity.class);
-           startActivity(notificationIntent);
-
-       }
-       if(id == R.id.action_events){
-           Intent eventsIntent = new Intent(MainActivity.this, EventActivity.class);
-           startActivity(eventsIntent);
-       }
-       if(id == R.id.action_messages){
-           Toast.makeText(getApplicationContext(),"messages page",Toast.LENGTH_SHORT).show();
-           Intent i = new Intent(MainActivity.this, MessagesActivity.class);
-           if(i == null){
-               Log.d(TAG, "intent null");
-               Toast.makeText(getApplicationContext(), "intent null", Toast.LENGTH_SHORT).show();
-           }
-           else if(i != null){
-               startActivity(i);
-           }
-
-       }
-       if(id == R.id.action_account){
-           Intent accountIntent = new Intent(MainActivity.this, AccountActivity.class);
-           startActivity(accountIntent);
-
-       }
-       if (id == R.id.sign_out_menu){
-           AuthUI.getInstance().signOut(this);
-           return true;
-       }
-       return super.onOptionsItemSelected(item);
-   }
-
-    public void openPostActivity(){
-        Intent i = new Intent(this, PostActivity.class);
-        startActivity(i);
-
-    }
-
-    public void openFilterActivity(){
-        Intent i = new Intent(this, FilterOptions.class);
-        startActivity(i);
-    }
-
-
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        //ad listener
-        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-    }
-
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        //remove listener
-        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-    }
-
-
     @Override
     protected void onStart(){
         super.onStart();
@@ -216,6 +132,108 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+
+
+        // Set an OnItemClickListener for each of the list items
+        final Context context = this;
+        listViewEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //ListData selected = aList.get(position);
+                event selected = eventList.get(position);
+                String a = "hello";
+
+                // Create an Intent to reference our new activity, then call startActivity
+                // to transition into the new Activity.
+                Intent detailIntent = new Intent(MainActivity.this, EventActivity.class);
+                Intent i = new Intent(context, MainActivity.class);
+
+                // pass some key value pairs to the next Activity (via the Intent)
+                detailIntent.putExtra("data", selected.id);
+                Toast.makeText(MainActivity.this, "event key " + selected.id, Toast.LENGTH_SHORT).show();
+
+                startActivity(detailIntent);
+                }
+            });
+    }
+
+
+
+    @Override
+   public boolean onCreateOptionsMenu(Menu menu){
+       MenuInflater inflater = getMenuInflater();
+       inflater.inflate(R.menu.menu, menu);
+       return true;
+   }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        //ad listener
+        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        //remove listener
+        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if(id == R.id.action_home){
+            Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(homeIntent);
+
+        }
+        if(id == R.id.action_notification){
+            Intent notificationIntent = new Intent(MainActivity.this, NotificationActivity.class);
+            startActivity(notificationIntent);
+
+        }
+        if(id == R.id.action_events){
+            Intent eventsIntent = new Intent(MainActivity.this, EventActivity.class);
+            startActivity(eventsIntent);
+        }
+        if(id == R.id.action_messages){
+            Toast.makeText(getApplicationContext(),"messages page",Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(MainActivity.this, MessagesActivity.class);
+            if(i == null){
+                Log.d(TAG, "intent null");
+                Toast.makeText(getApplicationContext(), "intent null", Toast.LENGTH_SHORT).show();
+            }
+            else if(i != null){
+                startActivity(i);
+            }
+
+        }
+        if(id == R.id.action_account){
+            Intent accountIntent = new Intent(MainActivity.this, AccountActivity.class);
+            startActivity(accountIntent);
+
+        }
+        if (id == R.id.sign_out_menu){
+            AuthUI.getInstance().signOut(this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void openPostActivity(){
+        Intent i = new Intent(this, PostActivity.class);
+        startActivity(i);
+
+    }
+
+    public void openFilterActivity(){
+        Intent i = new Intent(this, FilterOptions.class);
+        startActivity(i);
     }
 
 
