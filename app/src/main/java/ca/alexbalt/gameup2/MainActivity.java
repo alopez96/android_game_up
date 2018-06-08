@@ -43,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private DatabaseReference mUserReference;
     public static final int RC_SIGN_IN = 1;     ///request code
-    private String mUsername;
-    private String mUserEmail;
+    private String mUsername, mUserEmail, bio, favGames, uid, key;
+    private ArrayList<String> friends = new ArrayList<>();
+    private ArrayList<String> eventsJoined = new ArrayList<>();
 
     ListView listViewEvents;
     List<event> eventList;
@@ -63,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mEventsReference = mFirebaseDatabase.getReference().child("events");
         eventList = new ArrayList<>();
+        bio = "";
+        favGames = "";
+        uid = "";
+        //friends.add("");
+        //eventsJoined.add("");
 
 
 
@@ -88,8 +94,13 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"Now signed in!", Toast.LENGTH_SHORT).show();
                     mUsername = user.getDisplayName();
                     mUserEmail = user.getEmail();
-                    String uid = mUserReference.push().getKey();
-                    mUserReference.push().setValue(mUsername);
+                    uid = user.getUid();
+                    key = mUserReference.push().getKey();
+
+                    if (user.getUid() == null){
+                        User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, uid, key);
+                        mUserReference.child(uid).setValue(currentUser);
+                    }
                 }
                 else {
                     //user is signed out

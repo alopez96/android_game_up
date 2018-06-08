@@ -14,6 +14,7 @@ public class event {
     public String console;
     public String game;
     public String date;
+    public String time;
     public String body;
     public String id;
     public String creator;
@@ -23,14 +24,14 @@ public class event {
     private event() {}
 
 
-    public event(String title, String console, String game, String date, String body, String id,
+    public event(String title, String console, String game, String date, String time, String body, String id,
                  String creator, ArrayList<String> joinedList)
     {
         this.title = title;
         this.console = console;
         this.game = game;
-
         this.date = date;
+        this.time = time;
         this.body = body;
         this.id = id;
         this.creator = creator;
@@ -65,4 +66,9 @@ public class event {
     public ArrayList<String> getJoinedList() {
         return joinedList;
     }
+
+    public String getTime() {
+        return time;
+    }
 }
+

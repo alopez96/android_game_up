@@ -230,10 +230,18 @@ public class MessagesActivity extends AppCompatActivity {
                                 FriendlyMessage friendlyMessage =
                                             new FriendlyMessage(null, mUsername, downloadUrl.toString());
                                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
+                                uploadImage(downloadUrl);
                             }
                         });
+
             }
         }
+    }
+
+    private void uploadImage(Uri uri) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child("chat_photos").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        storageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).putFile(uri);
     }
 
     @Override

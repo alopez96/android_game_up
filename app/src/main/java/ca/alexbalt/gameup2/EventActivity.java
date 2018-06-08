@@ -37,14 +37,20 @@ public class EventActivity extends AppCompatActivity {
 
     private FirebaseDatabase mFirebaseDatabase;             //entry point for our app to access the database
     private DatabaseReference mEventsReference, specificEventRef;
+    private DatabaseReference mUsersReference, specificUserRef;
     private DatabaseReference mPostReference;
     private FirebaseAuth mFirebaseAuth;
-    private String mUsername, key;
+    private String mUsername, key, userkey;
     TextView titleTextView, consoleTextView, gameTextView;
     TextView dateTextView, creatorTextView, descTextView;
     ListView joinedListView;
     List<String> listString;
     private Button joinButton;
+    private String userEmail, bio, favGames, uid;
+    private ArrayList<String> friends = friends = new ArrayList<>();;
+    private ArrayList<String> eventsJoined = new ArrayList<>();;
+    private event Event;
+    private User thisUser;
 
 
     @Override
@@ -68,13 +74,21 @@ public class EventActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         mUsername = user.getDisplayName();
+        userEmail = user.getEmail();
+        bio = "";
+        favGames = "";
+        uid = user.getUid();
 
         Intent intent = getIntent();
         key = intent.getStringExtra("data");
         if (key == null) {
-            throw new IllegalArgumentException("Must pass EXTRA_POST_KEY");
+            throw new IllegalArgumentException("Must pass EVENT KEY VALUE");
         }
         specificEventRef = mEventsReference.child(key);
+
+        mUsersReference = mFirebaseDatabase.getReference().child("users");
+        specificUserRef = mUsersReference.child(uid);
+
     }
 
     @Override
@@ -83,7 +97,7 @@ public class EventActivity extends AppCompatActivity {
         specificEventRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                    event Event = dataSnapshot.getValue(event.class);
+                    Event = dataSnapshot.getValue(event.class);
                     titleTextView.setText(Event.title);
                     consoleTextView.setText(Event.console);
                     gameTextView.setText(Event.game);
@@ -100,15 +114,40 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
+        specificUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                thisUser = dataSnapshot.getValue(User.class);
+                eventsJoined = thisUser.eventsJoined;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listString.add(mUsername);
+                //if user has been added to event, do not add again
+                for(int i = 0; i < listString.size(); i++){
+                    if(listString.get(i) == mUsername) {
+                        listString.remove(i);
+                        Toast.makeText(EventActivity.this, "you are already a part of the event " + titleTextView.getText().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+                //specificUserRef = mUsersReference.child(thisUser.getUid());
+                eventsJoined.add(Event.title);
+                specificUserRef.child("eventsJoined").setValue(eventsJoined);
                 specificEventRef.child("joinedList").setValue(listString);
-                Toast.makeText(EventActivity.this, "you have joined event " + titleTextView.getText().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(EventActivity.this, "you have joined event " + titleTextView.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         });
+
 
     }
 

@@ -76,6 +76,7 @@ public class PostActivity extends AppCompatActivity {
         c = consoleText.getText().toString();
         game = gameText.getText().toString();
         date = dateText.getText().toString();
+        String time = "1:00";
         ArrayList<String> joinedList = new ArrayList<>();
         joinedList.add("");
 
@@ -84,7 +85,7 @@ public class PostActivity extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("events");
             String key = myRef.push().getKey();
-            event Event = new event(b, c, game, date, a, key, creator, joinedList);
+            event Event = new event(b, c, game, date, time, a, key, creator, joinedList);
             myRef.child(key).setValue(Event);
             Toast.makeText(this, "event added",Toast.LENGTH_SHORT).show();
             Intent i = new Intent(this, EventActivity.class);
