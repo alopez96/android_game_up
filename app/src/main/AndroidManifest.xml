@@ -23,6 +23,7 @@
         <activity android:name=".PostActivity" />
         <activity android:name=".FilterOptions"/>
         <activity android:name=".EditAccountActivity"/>
+        <activity android:name=".ProfilesActivity"/>
 
     </application>
 

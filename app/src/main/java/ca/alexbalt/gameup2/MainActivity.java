@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
                     key = mUserReference.push().getKey();
 
                     if (user.getUid() != null){
-                        User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, eventsCreated, uid, key);
-                        mUserReference.child(uid).setValue(currentUser);
+//                        User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, eventsCreated, uid, key);
+//                        mUserReference.child(uid).setValue(currentUser);
                     }
                 }
                 else {

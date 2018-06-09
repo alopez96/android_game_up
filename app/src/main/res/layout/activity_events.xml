@@ -23,10 +23,10 @@
 
     <ScrollView
         android:id="@id/scrollView"
-        android:layout_width="384dp"
-        android:layout_height="500dp"
+        android:layout_width="383dp"
+        android:layout_height="516dp"
         app:layout_constraintTop_toBottomOf="@+id/titleTV"
-        tools:layout_editor_absoluteX="0dp">
+        tools:layout_editor_absoluteX="1dp">
 
 
         <LinearLayout
@@ -121,35 +121,37 @@
                     android:textSize="24sp" />
 
 
-            <TextView
-                android:id="@+id/timeTV"
-                android:layout_width="352dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginRight="45dp"
-                android:text="time"
-                android:textColor="#000000"
-                android:textSize="24sp" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/timeTV"
+                    android:layout_width="352dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="45dp"
+                    android:text="time"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/joinB"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:text="Join Event"
-            android:textColor="#000000" />
+            </TableRow>
+            <Button
+                android:id="@+id/joinB"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:text="Join Event"
+                android:textColor="#000000" />
 
-    <ListView
-        android:id="@+id/joinedLV"
-        android:layout_width="match_parent"
-        android:layout_height="156dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="73dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/post_button"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"></ListView>
+            <ListView
+                android:id="@+id/joinedLV"
+                android:layout_width="match_parent"
+                android:layout_height="156dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="73dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/post_button"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp">
+            </ListView>
+
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

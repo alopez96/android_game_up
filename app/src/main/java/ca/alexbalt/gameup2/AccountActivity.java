@@ -19,9 +19,13 @@ public class AccountActivity extends AppCompatActivity {
     private static final String TAG = "main_activity";
     private TextView nameTextView;
     private TextView emailTextView;
+    private TextView bioTextView;
+    private TextView gamesTextView;
 
     private String mUsername;
     private String mUserEmail;
+    private String mUserBio;
+    private String mUserGames;
     private Button editButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
