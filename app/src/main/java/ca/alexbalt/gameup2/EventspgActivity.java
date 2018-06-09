@@ -9,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class NotificationActivity extends AppCompatActivity {
+public class EventspgActivity extends AppCompatActivity {
     private static final String TAG = "main_activity";
 
     @Override
@@ -30,25 +30,23 @@ public class NotificationActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_home){
-            Intent homeIntent = new Intent(NotificationActivity.this, MainActivity.class);
+            Intent homeIntent = new Intent(EventspgActivity.this, MainActivity.class);
             startActivity(homeIntent);
+            EventspgActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-        }
-
-        if(id == R.id.action_notification){
-            Intent notificationIntent = new Intent(NotificationActivity.this, NotificationActivity.class);
-            startActivity(notificationIntent);
 
         }
 
         if(id == R.id.action_events){
-            Intent eventsIntent = new Intent(NotificationActivity.this, EventActivity.class);
-            startActivity(eventsIntent);
+            Intent eventIntent = new Intent(EventspgActivity.this, EventspgActivity.class);
+            startActivity(eventIntent);
+            EventspgActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
+
 
         if(id == R.id.action_messages){
             Toast.makeText(getApplicationContext(),"messages page",Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(NotificationActivity.this, MessagesActivity.class);
+            Intent i = new Intent(EventspgActivity.this, MessagesActivity.class);
             if(i == null){
                 Log.d(TAG, "intent null");
                 Toast.makeText(getApplicationContext(), "intent null", Toast.LENGTH_SHORT).show();
@@ -56,15 +54,18 @@ public class NotificationActivity extends AppCompatActivity {
             else if(i != null){
                 startActivity(i);
             }
+            EventspgActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
 
         }
 
         if(id == R.id.action_account){
-            Intent accountIntent = new Intent(NotificationActivity.this, AccountActivity.class);
+            Intent accountIntent = new Intent(EventspgActivity.this, AccountActivity.class);
             startActivity(accountIntent);
+            EventspgActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
 
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

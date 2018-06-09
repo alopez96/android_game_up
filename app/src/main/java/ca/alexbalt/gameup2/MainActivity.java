@@ -60,14 +60,17 @@ public class MainActivity extends AppCompatActivity {
 
         postButton = findViewById(R.id.post_button);
 
+
+
+
         listViewEvents =findViewById(R.id.listViewEvents);
         //TextView text = findViewById(R.id.nothing_tv);
         //text.setVisibility(View.INVISIBLE);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mEventsReference = mFirebaseDatabase.getReference().child("events");
         eventList = new ArrayList<>();
-        bio = "";
-        favGames = "";
+       // bio = "";
+        //favGames = "";
         uid = "";
         //friends.add("");
         //eventsJoined.add("");
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     uid = user.getUid();
                     key = mUserReference.push().getKey();
 
-                    if (user.getUid() == null){
+                    if (user.getUid() != null){
                         User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, eventsCreated, uid, key);
                         mUserReference.child(uid).setValue(currentUser);
                     }
@@ -198,42 +201,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.action_home){
+        if (id == R.id.action_home) {
             Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
             startActivity(homeIntent);
+            MainActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
 
         }
-        if(id == R.id.action_notification){
-            Intent notificationIntent = new Intent(MainActivity.this, NotificationActivity.class);
-            startActivity(notificationIntent);
+        if (id == R.id.action_events) {
+            Intent eventIntent = new Intent(MainActivity.this, EventspgActivity.class);
+            startActivity(eventIntent);
+            MainActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
 
-        }
-        if(id == R.id.action_events){
-            Intent eventsIntent = new Intent(MainActivity.this, EventActivity.class);
-            startActivity(eventsIntent);
-        }
-        if(id == R.id.action_messages){
-            Toast.makeText(getApplicationContext(),"messages page",Toast.LENGTH_SHORT).show();
+        if (id == R.id.action_messages) {
+            Toast.makeText(getApplicationContext(), "messages page", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(MainActivity.this, MessagesActivity.class);
-            if(i == null){
+            if (i == null) {
                 Log.d(TAG, "intent null");
                 Toast.makeText(getApplicationContext(), "intent null", Toast.LENGTH_SHORT).show();
-            }
-            else if(i != null){
+            } else if (i != null) {
                 startActivity(i);
             }
+            MainActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         }
-        if(id == R.id.action_account){
+        if (id == R.id.action_account) {
             Intent accountIntent = new Intent(MainActivity.this, AccountActivity.class);
             startActivity(accountIntent);
+            MainActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         }
-        if (id == R.id.sign_out_menu){
+        if (id == R.id.sign_out_menu) {
             AuthUI.getInstance().signOut(this);
             return true;
         }

@@ -64,18 +64,15 @@ public class AccountActivity extends AppCompatActivity {
         if(id == R.id.action_home){
             Intent homeIntent = new Intent(AccountActivity.this, MainActivity.class);
             startActivity(homeIntent);
+            AccountActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-        }
-
-        if(id == R.id.action_notification){
-            Intent notificationIntent = new Intent(AccountActivity.this, NotificationActivity.class);
-            startActivity(notificationIntent);
 
         }
 
         if(id == R.id.action_events){
-            Intent eventsIntent = new Intent(AccountActivity.this, EventActivity.class);
-            startActivity(eventsIntent);
+            Intent eventIntent = new Intent(AccountActivity.this, EventspgActivity.class);
+            startActivity(eventIntent);
+            AccountActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
 
         if(id == R.id.action_messages){
@@ -88,12 +85,15 @@ public class AccountActivity extends AppCompatActivity {
             else if(i != null){
                 startActivity(i);
             }
+            AccountActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
 
         }
 
         if(id == R.id.action_account){
             Intent accountIntent = new Intent(AccountActivity.this, AccountActivity.class);
             startActivity(accountIntent);
+            AccountActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         }
         return super.onOptionsItemSelected(item);

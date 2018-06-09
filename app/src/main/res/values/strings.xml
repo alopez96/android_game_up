@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GameUp2</string>
+    <string name="app_name">GameUp</string>
 
 
     <dimen name="activity_horizontal_margin">16dp</dimen>

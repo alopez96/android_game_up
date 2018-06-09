@@ -6,95 +6,124 @@
     android:layout_height="match_parent"
     tools:context=".PostActivity">
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="132dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="32dp"
-        android:text="Private"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/post_to_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="POST"
-        android:textColor="#ff0000"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <EditText
-        android:id="@+id/desc_tv"
-        android:layout_width="259dp"
-        android:layout_height="74dp"
-        android:layout_marginBottom="36dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
-        android:ems="10"
-        android:hint="enter description here"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/post_to_home"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <EditText
         android:id="@+id/title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="84dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="27dp"
+        android:layout_width="285dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginRight="52dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="48dp"
+        android:drawableLeft="@drawable/outline_title_black_24"
         android:ems="10"
         android:hint="title"
         android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/console_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="285dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="84dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="31dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="24dp"
+        android:drawableLeft="@drawable/outline_gamepad_black_24"
         android:ems="10"
         android:hint="console"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+        app:layout_constraintEnd_toEndOf="@+id/game_tv"
+        app:layout_constraintStart_toStartOf="@+id/game_tv"
+        app:layout_constraintTop_toBottomOf="@+id/game_tv" />
 
     <EditText
         android:id="@+id/game_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="285dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="84dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="24dp"
+        android:drawableLeft="@drawable/outline_videogame_asset_black_24"
         android:ems="10"
         android:hint="game"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/console_tv" />
+        app:layout_constraintEnd_toEndOf="@+id/title_tv"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/title_tv"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
 
     <EditText
         android:id="@+id/date_tv"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:drawableLeft="@drawable/outline_calendar_today_black_24"
+        android:ems="10"
+        android:hint="date"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/console_tv"
+        app:layout_constraintTop_toBottomOf="@+id/console_tv" />
+
+    <EditText
+        android:id="@+id/desc_tv"
+        android:layout_width="289dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="24dp"
+        android:drawableLeft="@drawable/outline_description_black_24"
+        android:ems="10"
+        android:hint="enter description here"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="@+id/time"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/date_tv"
+        app:layout_constraintTop_toBottomOf="@+id/date_tv" />
+
+    <Button
+        android:id="@+id/post_to_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="84dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="23dp"
-        android:ems="10"
-        android:hint="date and time"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_tv" />
+        android:layout_marginBottom="44dp"
 
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:layout_marginTop="8dp"
+        android:text="POST"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/desc_tv"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="102dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="44dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="8dp"
+        android:text="Private"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/desc_tv"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/time"
+        android:layout_width="118dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="24dp"
+        android:drawableLeft="@drawable/outline_access_time_black_24"
+        android:hint="time"
+        app:layout_constraintEnd_toEndOf="@+id/console_tv"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toEndOf="@+id/date_tv"
+        app:layout_constraintTop_toBottomOf="@+id/console_tv" />
+    />
 
 </android.support.constraint.ConstraintLayout>
