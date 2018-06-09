@@ -47,11 +47,11 @@ public class EventActivity extends AppCompatActivity {
     List<String> listString;
     private Button joinButton;
     private String userEmail, bio, favGames, uid;
-    private ArrayList<String> friends = friends = new ArrayList<>();;
-    private ArrayList<String> eventsJoined = new ArrayList<>();;
+    private ArrayList<String> friends = new ArrayList<>();
+    private ArrayList<String> eventsJoined = new ArrayList<>();
     private event Event;
     private User thisUser;
-
+    private boolean exist = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,15 +131,16 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //if user has been added to event, do not add again
-                boolean exist = false;
                 for(int i = 0; i < listString.size(); i++){
                     if(listString.get(i) == mUsername) {
-                        exist = true;
                         Toast.makeText(EventActivity.this, "you are already a part of the event " + titleTextView.getText().toString(), Toast.LENGTH_SHORT).show();
+                        exist = true;
+                        break;
                     }
                 }
                 if(!exist){
                     listString.add(mUsername);
+                    specificEventRef.child("joinedList").setValue(listString);
                     Toast.makeText(EventActivity.this, "you have joined event " + titleTextView.getText().toString(), Toast.LENGTH_SHORT).show();
                 }
 
@@ -147,7 +148,6 @@ public class EventActivity extends AppCompatActivity {
                 //specificUserRef = mUsersReference.child(thisUser.getUid());
                 eventsJoined.add(Event.title);
                 specificUserRef.child("eventsJoined").setValue(eventsJoined);
-                specificEventRef.child("joinedList").setValue(listString);
             }
         });
 

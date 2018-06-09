@@ -22,7 +22,7 @@
         <activity android:name=".AccountActivity" />
         <activity android:name=".PostActivity" />
         <activity android:name=".FilterOptions"/>
-        <activity android:name=".SpecificEventActivity"/>
+        <activity android:name=".EditAccountActivity"/>
 
     </application>
 

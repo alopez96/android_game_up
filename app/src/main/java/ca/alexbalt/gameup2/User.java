@@ -11,17 +11,20 @@ public class User {
     public String key;
     public ArrayList<String> friends = new ArrayList<>();
     public ArrayList<String> eventsJoined = new ArrayList<>();
+    public ArrayList<String> eventsCreated = new ArrayList<>();
 
     private User() {}
 
     public User(String userName, String userEmail, String bio, String favGames,
-                ArrayList<String> friends, ArrayList<String> eventsJoined, String uid, String key) {
+                ArrayList<String> friends, ArrayList<String> eventsJoined,
+                ArrayList<String> eventsCreated, String uid, String key) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.bio = bio;
         this.favGames = favGames;
         this.friends = friends;
         this.eventsJoined = eventsJoined;
+        this.eventsCreated = eventsCreated;
         this.uid = uid;
         this.key = key;
     }
@@ -56,5 +59,9 @@ public class User {
 
     public String getKey() {
         return key;
+    }
+
+    public ArrayList<String> getEventsCreated() {
+        return eventsCreated;
     }
 }

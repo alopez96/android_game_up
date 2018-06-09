@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ public class AccountActivity extends AppCompatActivity {
 
     private String mUsername;
     private String mUserEmail;
+    private Button editButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,7 @@ public class AccountActivity extends AppCompatActivity {
         // Initialize references to views
         nameTextView = (TextView) findViewById(R.id.user_name_tv);
         emailTextView = (TextView) findViewById(R.id.user_email_tv);
+        editButton = findViewById(R.id.edit_account_bt);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mUsername = user.getDisplayName();
@@ -35,6 +39,14 @@ public class AccountActivity extends AppCompatActivity {
 
         nameTextView.setText(mUsername);
         emailTextView.setText(mUserEmail);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AccountActivity.this, EditAccountActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

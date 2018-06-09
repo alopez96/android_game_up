@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private String mUsername, mUserEmail, bio, favGames, uid, key;
     private ArrayList<String> friends = new ArrayList<>();
     private ArrayList<String> eventsJoined = new ArrayList<>();
+    private ArrayList<String> eventsCreated = new ArrayList<>();
+
 
     ListView listViewEvents;
     List<event> eventList;
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     key = mUserReference.push().getKey();
 
                     if (user.getUid() == null){
-                        User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, uid, key);
+                        User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, eventsCreated, uid, key);
                         mUserReference.child(uid).setValue(currentUser);
                     }
                 }
