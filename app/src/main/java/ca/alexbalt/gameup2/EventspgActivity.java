@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+
 public class EventspgActivity extends AppCompatActivity {
     private static final String TAG = "main_activity";
 
@@ -55,16 +57,17 @@ public class EventspgActivity extends AppCompatActivity {
                 startActivity(i);
             }
             EventspgActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-
         }
 
         if(id == R.id.action_account){
             Intent accountIntent = new Intent(EventspgActivity.this, AccountActivity.class);
             startActivity(accountIntent);
             EventspgActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
 
-
+        if (id == R.id.sign_out_menu) {
+            AuthUI.getInstance().signOut(this);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
