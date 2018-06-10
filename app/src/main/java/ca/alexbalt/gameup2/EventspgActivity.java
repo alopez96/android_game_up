@@ -17,7 +17,7 @@ public class EventspgActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification);
+        setContentView(R.layout.activity_eventspage);
     }
 
     @Override
@@ -35,8 +35,6 @@ public class EventspgActivity extends AppCompatActivity {
             Intent homeIntent = new Intent(EventspgActivity.this, MainActivity.class);
             startActivity(homeIntent);
             EventspgActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-
         }
 
         if(id == R.id.action_events){

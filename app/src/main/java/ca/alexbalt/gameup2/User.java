@@ -13,7 +13,7 @@ public class User {
     public ArrayList<String> eventsJoined = new ArrayList<>();
     public ArrayList<String> eventsCreated = new ArrayList<>();
 
-    private User() {}
+    public User() {}
 
     public User(String userName, String userEmail, String bio, String favGames,
                 ArrayList<String> friends, ArrayList<String> eventsJoined,

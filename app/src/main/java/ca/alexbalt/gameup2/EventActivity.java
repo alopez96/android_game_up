@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -53,6 +55,8 @@ public class EventActivity extends AppCompatActivity {
     private event Event;
     private User thisUser;
     private boolean exist = false;
+    List<User> userList;
+    public User userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,7 @@ public class EventActivity extends AppCompatActivity {
         descTextView = findViewById(R.id.descTV);
         joinedListView = findViewById(R.id.joinedLV);
         listString = new ArrayList<>();
+        userList = new ArrayList<>();
         joinButton = findViewById(R.id.joinB);
 
         //ListView list = findViewById(R.id.event_post);
@@ -86,7 +91,6 @@ public class EventActivity extends AppCompatActivity {
             throw new IllegalArgumentException("Must pass EVENT KEY VALUE");
         }
         specificEventRef = mEventsReference.child(key);
-
         mUsersReference = mFirebaseDatabase.getReference().child("users");
         specificUserRef = mUsersReference.child(uid);
 
@@ -105,15 +109,22 @@ public class EventActivity extends AppCompatActivity {
                     dateTextView.setText(Event.date);
                     creatorTextView.setText(Event.creator);
                     descTextView.setText(Event.body);
-                    listString = Event.joinedList;
-
-                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(EventActivity.this, android.R.layout.simple_list_item_1, listString);
-                joinedListView.setAdapter(adapter);
+                    listString.clear();
+                    listString = Event.getJoinedList();
+                    int sizeOfList = Event.getJoinedList().size();
+                    for(int i = 0; i < sizeOfList; i++){
+                        User userdata = new User();
+                        userdata.userName = listString.get(i);
+                        //userdata.uid =
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(EventActivity.this, android.R.layout.simple_list_item_1, listString);
+                    joinedListView.setAdapter(adapter);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
 
         specificUserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -121,9 +132,43 @@ public class EventActivity extends AppCompatActivity {
                 thisUser = dataSnapshot.getValue(User.class);
                 eventsJoined = thisUser.eventsJoined;
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mUsersReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userList.clear();
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    User user = snapshot.getValue(User.class);
+                    userList.add(user);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        // Set an OnItemClickListener for each of the list items
+        final Context context = this;
+        joinedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                  /*  User selected = userList.get(position);
+                Intent detailIntent = new Intent(EventActivity.this, ProfilesActivity.class);
+                detailIntent.putExtra("name", selected.userName);
+                detailIntent.putExtra("email", selected.userEmail);
+                detailIntent.putExtra("bio", selected.bio);
+                detailIntent.putExtra("key", selected.key);
+                detailIntent.putExtra("uid", selected.uid);
+                startActivity(detailIntent);*/
+                  String selected = listString.get(position);
+                  Intent i = new Intent(EventActivity.this, ProfilesActivity.class);
+                  i.putExtra("uid", selected);
+                  startActivity(i);
 
             }
         });
@@ -133,22 +178,20 @@ public class EventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //if user has been added to event, do not add again
                 for(int i = 0; i < listString.size(); i++){
-                    if(listString.get(i) == mUsername) {
+                    if(listString.get(i) == mUsername || listString.get(i) == uid) {
                         Toast.makeText(EventActivity.this, "you are already a part of the event " + titleTextView.getText().toString(), Toast.LENGTH_SHORT).show();
                         exist = true;
                         break;
                     }
                 }
-                if(!exist){
-                    listString.add(mUsername);
+                if(!exist) {
+                    listString.add(uid);
                     specificEventRef.child("joinedList").setValue(listString);
+                    eventsJoined.add(Event.title);
                     Toast.makeText(EventActivity.this, "you have joined event " + titleTextView.getText().toString(), Toast.LENGTH_SHORT).show();
                 }
-
-
-                //specificUserRef = mUsersReference.child(thisUser.getUid());
-                eventsJoined.add(Event.title);
                 specificUserRef.child("eventsJoined").setValue(eventsJoined);
+                specificEventRef.child("joinedList").setValue(listString);
             }
         });
 
@@ -175,16 +218,11 @@ public class EventActivity extends AppCompatActivity {
             Intent homeIntent = new Intent(EventActivity.this, MainActivity.class);
             startActivity(homeIntent);
             EventActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-
         }
-
         if(id == R.id.action_events){
             Intent eventIntent = new Intent(EventActivity.this, EventspgActivity.class);
             startActivity(eventIntent);
             EventActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-
         }
 
         if(id == R.id.action_messages){
@@ -198,16 +236,12 @@ public class EventActivity extends AppCompatActivity {
                 startActivity(i);
             }
             EventActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-
         }
 
         if(id == R.id.action_account){
             Intent accountIntent = new Intent(EventActivity.this, AccountActivity.class);
             startActivity(accountIntent);
             EventActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-
         }
 
         if (id == R.id.sign_out_menu) {

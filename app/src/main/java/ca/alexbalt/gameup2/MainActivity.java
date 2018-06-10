@@ -75,10 +75,6 @@ public class MainActivity extends AppCompatActivity {
         //friends.add("");
         //eventsJoined.add("");
 
-
-
-
-
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     key = mUserReference.push().getKey();
 
                     if (user.getUid() != null){
-//                        User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, eventsCreated, uid, key);
+                        User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, eventsCreated, uid, key);
 //                        mUserReference.child(uid).setValue(currentUser);
                     }
                 }
@@ -152,8 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 listViewEvents.setAdapter(adapter);
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
 
@@ -163,12 +158,8 @@ public class MainActivity extends AppCompatActivity {
         listViewEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //ListData selected = aList.get(position);
                 event selected = eventList.get(position);
-                // Create an Intent to reference our new activity, then call startActivity
-                // to transition into the new Activity.
                 Intent detailIntent = new Intent(MainActivity.this, EventActivity.class);
-                // pass some key value pairs to the next Activity (via the Intent)
                 detailIntent.putExtra("data", selected.id);
                 Toast.makeText(MainActivity.this, "event key " + selected.id, Toast.LENGTH_SHORT).show();
                 startActivity(detailIntent);
@@ -249,11 +240,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
 
     }
-
-    public void openFilterActivity(){
-        Intent i = new Intent(this, FilterOptions.class);
-        startActivity(i);
-    }
-
 
 }
