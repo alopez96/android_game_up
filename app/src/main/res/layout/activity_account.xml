@@ -9,135 +9,136 @@
     <ScrollView
         android:id="@id/scrollView"
         android:layout_width="385dp"
-        android:layout_height="wrap_content">
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:layout_editor_absoluteX="13dp"
+        tools:layout_editor_absoluteY="0dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageView2"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="25dp"
-            android:src="@drawable/sammy_slug"
-            app:civ_border_color="#000000"
-            app:civ_border_width="2dp" />
-
-        <TextView
-            android:id="@+id/user_name_tv"
-            android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:gravity="center"
-            android:text="Sammy the Slug"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="76dp"
-            tools:layout_editor_absoluteY="216dp" />
-
-        <TextView
-            android:id="@+id/user_email_tv"
-            android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:gravity="center"
-            android:text="slugbug@ucsc.edu"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-
-        <TableRow
-            android:id="@+id/tableRow2"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="100dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="7dp"
-                android:background="@color/colorAccent"
-                android:text="My Followers"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/sammy_slug"
+                app:civ_border_color="#000000"
+                app:civ_border_width="2dp" />
 
-
-
-            <Button
-                android:id="@+id/edit_account_bt"
-                android:layout_width="100dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="5dp"
-
-                android:text="Edit Account"
-                android:textSize="12sp"
-                android:background="@color/colorAccent"
-                android:textColor="#FFFFFF"
+            <TextView
+                android:id="@+id/user_name_tv"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
                 android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_email_tv" />
-        </TableRow>
+                android:text="Sammy the Slug"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="76dp"
+                tools:layout_editor_absoluteY="216dp" />
+
+            <TextView
+                android:id="@+id/user_email_tv"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:gravity="center"
+                android:text="slugbug@ucsc.edu"
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:text="Bio:"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/user_bio_tv"
-            android:layout_width="312dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:text="My name is Sammy. Im from Santa Cruz. I like to meet up with friends on the weekends and game. Usually hold tournaments at my place. Hit me up if you wanna game. "
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:text="Fav Games:"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@color/colorAccent"
+                    android:text="My Followers"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
 
 
-        <TextView
-            android:id="@+id/user_games_tv"
-            android:layout_width="312dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:text="Smash Bros., FIFA, Madden, Call of Duty,
+                <Button
+                    android:id="@+id/edit_account_bt"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="7dp"
+
+                    android:background="@color/colorAccent"
+                    android:gravity="center"
+                    android:text="Edit Account"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/user_email_tv" />
+            </TableRow>
+
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="Bio:"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/user_bio_tv"
+                android:layout_width="312dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="My name is Sammy. Im from Santa Cruz. I like to meet up with friends on the weekends and game. Usually hold tournaments at my place. Hit me up if you wanna game. "
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="Fav Games:"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/user_games_tv"
+                android:layout_width="312dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="Smash Bros., FIFA, Madden, Call of Duty,
                  Battlefield 4, Destiny, Halo "
-            android:textColor="#000000"
-            android:textSize="18sp" />
-    </LinearLayout>
-</ScrollView>
+                android:textColor="#000000"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </android.support.constraint.ConstraintLayout>

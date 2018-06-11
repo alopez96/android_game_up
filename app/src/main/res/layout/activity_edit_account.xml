@@ -12,16 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="52dp"
         android:layout_marginBottom="76dp"
-        android:layout_marginEnd="92dp"
-        android:layout_marginRight="92dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginRight="88dp"
         android:background="@color/colorAccent"
         android:text="submit"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_bio_tv"
-        app:layout_constraintVertical_bias="0.684" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/cancel_submit_bt"
@@ -32,24 +29,21 @@
         android:layout_marginLeft="52dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:text="cancel"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/submit_bt"
         app:layout_constraintHorizontal_bias="0.126"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_bio_tv"
-        app:layout_constraintVertical_bias="0.684" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/edit_display_name_tv"
         android:layout_width="285dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="80dp"
         android:drawableLeft="@drawable/outline_account_circle_black_24"
         android:ems="10"
         android:hint="display name"
@@ -60,22 +54,17 @@
 
     <EditText
         android:id="@+id/edit_games_tv"
-        android:layout_width="285dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="35dp"
+        android:layout_width="281dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="32dp"
         android:drawableLeft="@drawable/outline_videogame_asset_black_24"
         android:ems="10"
         android:hint="Edit favorite games here"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/edit_bio_tv"
-        app:layout_constraintEnd_toEndOf="@+id/edit_display_name_tv"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_display_name_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_bio_tv" />
 
     <EditText
         android:id="@+id/edit_bio_tv"
@@ -85,14 +74,15 @@
         android:layout_marginLeft="52dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="32dp"
         android:drawableLeft="@drawable/outline_description_black_24"
         android:ems="10"
         android:hint="edit bio here"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="@+id/edit_games_tv"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_games_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_display_name_tv" />
 
 
 </android.support.constraint.ConstraintLayout>

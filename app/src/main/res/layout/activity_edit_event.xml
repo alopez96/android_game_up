@@ -97,6 +97,7 @@
         android:layout_marginBottom="36dp"
         android:layout_marginEnd="53dp"
         android:layout_marginRight="53dp"
+        android:background="@color/colorAccent"
         android:text="submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -110,6 +111,7 @@
         android:layout_marginLeft="63dp"
         android:layout_marginRight="92dp"
         android:layout_marginStart="63dp"
+        android:background="@color/colorAccent"
         android:text="cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button"

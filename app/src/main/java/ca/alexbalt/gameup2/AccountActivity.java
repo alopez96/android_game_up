@@ -80,7 +80,9 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AccountActivity.this, EditAccountActivity.class);
+                intent.putExtra("bio", thisUser.bio);
                 startActivity(intent);
+
             }
         });
     }

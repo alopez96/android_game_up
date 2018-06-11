@@ -24,7 +24,7 @@ public class EditAccountActivity extends AppCompatActivity{
     private Button cancelButton;
 
     private EditText displayNameText, bioText, gamesText;
-    private String mUsername, mUserEmail, mBio, mFavGames, uid, userKey;
+    private String mUsername, mUserEmail, mBio, mFavGames, uid, userKey, bio;
 
 
     private FirebaseAuth mFirebaseAuth;
@@ -43,13 +43,18 @@ public class EditAccountActivity extends AppCompatActivity{
 
         submitButton = findViewById(R.id.submit_bt);
         cancelButton = findViewById(R.id.cancel_submit_bt);
-        displayNameText = findViewById(R.id.edit_display_name_tv);
+//        displayNameText = findViewById(R.id.edit_display_name_tv);
         bioText = findViewById(R.id.edit_bio_tv);
         gamesText = findViewById(R.id.edit_games_tv);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUsersReference = mFirebaseDatabase.getReference().child("users");
+
+        Intent intent = getIntent();
+        bio = intent.getStringExtra("bio");
+//        bioText.setHint(getString(android.R.string.))
+
 
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         mUsername = user.getDisplayName();
