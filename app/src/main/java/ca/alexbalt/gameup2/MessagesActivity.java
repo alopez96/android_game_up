@@ -230,10 +230,18 @@ public class MessagesActivity extends AppCompatActivity {
                                 FriendlyMessage friendlyMessage =
                                             new FriendlyMessage(null, mUsername, downloadUrl.toString());
                                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
+                                uploadImage(downloadUrl);
                             }
                         });
+
             }
         }
+    }
+
+    private void uploadImage(Uri uri) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child("chat_photos").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        storageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).putFile(uri);
     }
 
     @Override
@@ -270,19 +278,17 @@ public class MessagesActivity extends AppCompatActivity {
         if(id == R.id.action_home){
             Intent homeIntent = new Intent(MessagesActivity.this, MainActivity.class);
             startActivity(homeIntent);
+            MessagesActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-        }
-
-        if(id == R.id.action_notification){
-            Intent notificationIntent = new Intent(MessagesActivity.this, NotificationActivity.class);
-            startActivity(notificationIntent);
 
         }
 
         if(id == R.id.action_events){
-            Intent eventsIntent = new Intent(MessagesActivity.this, EventActivity.class);
-            startActivity(eventsIntent);
+            Intent eventIntent = new Intent(MessagesActivity.this, EventspgActivity.class);
+            startActivity(eventIntent);
+            MessagesActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
+
 
         if(id == R.id.action_messages){
             Toast.makeText(getApplicationContext(),"messages page",Toast.LENGTH_SHORT).show();
@@ -294,11 +300,15 @@ public class MessagesActivity extends AppCompatActivity {
             else if(i != null){
                 startActivity(i);
             }
+            MessagesActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
         }
 
         if(id == R.id.action_account){
             Intent accountIntent = new Intent(MessagesActivity.this, AccountActivity.class);
             startActivity(accountIntent);
+            MessagesActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
         }
 
         if (id == R.id.sign_out_menu){
@@ -307,9 +317,6 @@ public class MessagesActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
 
     //set username
     private void onSignedInInitialize(String username){

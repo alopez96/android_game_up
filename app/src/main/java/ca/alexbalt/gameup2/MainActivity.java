@@ -36,14 +36,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     private Button postButton;
-    private Button filterBttn;
     private FirebaseDatabase mFirebaseDatabase;             //entry point for our app to access the database
     private DatabaseReference mEventsReference;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private FirebaseAuth mAuth;
+    private DatabaseReference mUserReference;
     public static final int RC_SIGN_IN = 1;     ///request code
+    private String mUsername, mUserEmail, bio, favGames, uid, key;
+    private ArrayList<String> friends = new ArrayList<>();
+    private ArrayList<String> eventsJoined = new ArrayList<>();
+    private ArrayList<String> eventsCreated = new ArrayList<>();
+
 
     ListView listViewEvents;
     List<event> eventList;
@@ -56,12 +60,20 @@ public class MainActivity extends AppCompatActivity {
 
         postButton = findViewById(R.id.post_button);
 
+
+
+
         listViewEvents =findViewById(R.id.listViewEvents);
         //TextView text = findViewById(R.id.nothing_tv);
         //text.setVisibility(View.INVISIBLE);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mEventsReference = mFirebaseDatabase.getReference().child("events");
         eventList = new ArrayList<>();
+       // bio = "";
+        //favGames = "";
+        uid = "";
+        //friends.add("");
+        //eventsJoined.add("");
 
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+        mUserReference = mFirebaseDatabase.getReference().child("users");
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -81,6 +93,15 @@ public class MainActivity extends AppCompatActivity {
                 if(user != null){
                     //user is signed in
                     Toast.makeText(MainActivity.this,"Now signed in!", Toast.LENGTH_SHORT).show();
+                    mUsername = user.getDisplayName();
+                    mUserEmail = user.getEmail();
+                    uid = user.getUid();
+                    key = mUserReference.push().getKey();
+
+                    if (user.getUid() != null){
+                        User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, eventsCreated, uid, key);
+//                        mUserReference.child(uid).setValue(currentUser);
+                    }
                 }
                 else {
                     //user is signed out
@@ -96,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //supposed to exit app when the back button is pressed on login
-    //but doesn't work rn
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -129,8 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 listViewEvents.setAdapter(adapter);
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
 
@@ -140,19 +158,10 @@ public class MainActivity extends AppCompatActivity {
         listViewEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //ListData selected = aList.get(position);
                 event selected = eventList.get(position);
-                String a = "hello";
-
-                // Create an Intent to reference our new activity, then call startActivity
-                // to transition into the new Activity.
                 Intent detailIntent = new Intent(MainActivity.this, EventActivity.class);
-                Intent i = new Intent(context, MainActivity.class);
-
-                // pass some key value pairs to the next Activity (via the Intent)
                 detailIntent.putExtra("data", selected.id);
                 Toast.makeText(MainActivity.this, "event key " + selected.id, Toast.LENGTH_SHORT).show();
-
                 startActivity(detailIntent);
                 }
             });
@@ -183,42 +192,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.action_home){
+        if (id == R.id.action_home) {
             Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
             startActivity(homeIntent);
+            MainActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
 
         }
-        if(id == R.id.action_notification){
-            Intent notificationIntent = new Intent(MainActivity.this, NotificationActivity.class);
-            startActivity(notificationIntent);
+        if (id == R.id.action_events) {
+            Intent eventIntent = new Intent(MainActivity.this, EventspgActivity.class);
+            startActivity(eventIntent);
+            MainActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
 
-        }
-        if(id == R.id.action_events){
-            Intent eventsIntent = new Intent(MainActivity.this, EventActivity.class);
-            startActivity(eventsIntent);
-        }
-        if(id == R.id.action_messages){
-            Toast.makeText(getApplicationContext(),"messages page",Toast.LENGTH_SHORT).show();
+        if (id == R.id.action_messages) {
+            Toast.makeText(getApplicationContext(), "messages page", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(MainActivity.this, MessagesActivity.class);
-            if(i == null){
+            if (i == null) {
                 Log.d(TAG, "intent null");
                 Toast.makeText(getApplicationContext(), "intent null", Toast.LENGTH_SHORT).show();
-            }
-            else if(i != null){
+            } else if (i != null) {
                 startActivity(i);
             }
+            MainActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         }
-        if(id == R.id.action_account){
+        if (id == R.id.action_account) {
             Intent accountIntent = new Intent(MainActivity.this, AccountActivity.class);
             startActivity(accountIntent);
+            MainActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         }
-        if (id == R.id.sign_out_menu){
+        if (id == R.id.sign_out_menu) {
             AuthUI.getInstance().signOut(this);
             return true;
         }
@@ -230,11 +240,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
 
     }
-
-    public void openFilterActivity(){
-        Intent i = new Intent(this, FilterOptions.class);
-        startActivity(i);
-    }
-
 
 }

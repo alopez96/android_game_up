@@ -6,24 +6,63 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="89dp"
+        android:layout_width="384dp"
+        android:layout_height="99dp"
+        android:background="@drawable/rectangle"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:padding="10dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="0dp">
 
-        <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/textViewDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="30sp" />
+        <TableLayout
+            android:layout_width="359dp"
+            android:layout_height="86dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="86dp"
+                    android:layout_height="wrap_content"
+                    android:text="Event:"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textViewTitle"
+                    android:layout_width="143dp"
+                    android:layout_height="35dp"
+                    android:text="TextView"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:text="When: "
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textViewDate"
+                    android:layout_width="257dp"
+                    android:layout_height="match_parent"
+                    android:text="TextView"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+            </TableRow>
+
+        </TableLayout>
+
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
