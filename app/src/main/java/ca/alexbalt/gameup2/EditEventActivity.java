@@ -97,14 +97,12 @@ public class EditEventActivity extends AppCompatActivity {
 
 
     public void submitChanges(){
-
         mTitle = titleText.getText().toString();
         mConsole = consoleText.getText().toString();
         mGame = gameText.getText().toString();
         mDate = dateText.getText().toString();
         mTime = timeText.getText().toString();
         mBody = bodyText.getText().toString();
-
 
         specificEventRef.child("title").setValue(mTitle);
         specificEventRef.child("console").setValue(mConsole);
