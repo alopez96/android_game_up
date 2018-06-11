@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> eventsJoined = new ArrayList<>();
     private ArrayList<String> eventsCreated = new ArrayList<>();
 
-
     ListView listViewEvents;
     List<event> eventList;
 
@@ -59,10 +58,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         postButton = findViewById(R.id.post_button);
-
-
-
-
         listViewEvents =findViewById(R.id.listViewEvents);
         //TextView text = findViewById(R.id.nothing_tv);
         //text.setVisibility(View.INVISIBLE);
@@ -71,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         eventList = new ArrayList<>();
        // bio = "";
         //favGames = "";
-        uid = "";
         //friends.add("");
         //eventsJoined.add("");
 
@@ -151,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-
-
         // Set an OnItemClickListener for each of the list items
         final Context context = this;
         listViewEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -206,6 +198,8 @@ public class MainActivity extends AppCompatActivity {
         }
         if (id == R.id.action_events) {
             Intent eventIntent = new Intent(MainActivity.this, EventspgActivity.class);
+            //eventIntent.putExtra("data", uid);
+            Toast.makeText(MainActivity.this, "Visiting list of events you have joined and created" , Toast.LENGTH_SHORT).show();
             startActivity(eventIntent);
             MainActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }

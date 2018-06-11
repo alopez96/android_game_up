@@ -19,43 +19,46 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/listViewOthers"
+        android:id="@+id/listViewCreated"
         android:layout_width="409dp"
-        android:layout_height="205dp"
+        android:layout_height="212dp"
+        android:layout_marginBottom="19dp"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        tools:ignore="MissingConstraints"></ListView>
+        app:layout_constraintStart_toStartOf="parent"></ListView>
 
     <ListView
-        android:id="@+id/listViewEvents"
+        android:id="@+id/listViewJoined"
         android:layout_width="409dp"
-        android:layout_height="200dp"
+        android:layout_height="184dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.606"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"></ListView>
+        ></ListView>
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="404dp"
-        android:layout_height="47dp"
+        android:layout_width="380dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@drawable/rectangle"
         android:gravity="center"
         android:text="Events Joined"
         android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
         android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/listViewEvents"
+        app:layout_constraintBottom_toTopOf="@+id/listViewJoined"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewOthers" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

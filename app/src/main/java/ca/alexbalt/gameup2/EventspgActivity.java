@@ -7,19 +7,71 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventspgActivity extends AppCompatActivity {
     private static final String TAG = "main_activity";
+    private FirebaseDatabase mFirebaseDatabase;             //entry point for our app to access the database
+    private DatabaseReference mUsersReference, specificUserRef;
+    private FirebaseAuth mFirebaseAuth;
+    private String mUsername, mUserEmail, bio, favGames, uid;
+    private ArrayList<String> eventsJoined = new ArrayList<>();
+    private ArrayList<String> eventsCreated = new ArrayList<>();
+    ListView JoinedList, CreatedList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventspage);
+
+        CreatedList = findViewById(R.id.listViewCreated);
+        JoinedList = findViewById(R.id.listViewJoined);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mUsersReference = mFirebaseDatabase.getReference().child("users");
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        mUsername = user.getDisplayName();
+        mUserEmail = user.getEmail();
+        uid = user.getUid();
+        specificUserRef = mUsersReference.child(uid);
     }
 
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        specificUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                eventsJoined = user.eventsJoined;
+                eventsCreated = user.eventsCreated;
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(EventspgActivity.this, android.R.layout.simple_list_item_1, eventsJoined);
+                JoinedList.setAdapter(adapter);
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(EventspgActivity.this, android.R.layout.simple_list_item_1, eventsCreated);
+                CreatedList.setAdapter(adapter2);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
