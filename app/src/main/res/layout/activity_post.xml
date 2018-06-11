@@ -60,7 +60,6 @@
         android:layout_marginTop="24dp"
         android:drawableLeft="@drawable/outline_calendar_today_black_24"
         android:ems="10"
-        android:hint="Date"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="@+id/console_tv"
         app:layout_constraintTop_toBottomOf="@+id/console_tv" />
@@ -120,7 +119,6 @@
         android:layout_marginStart="18dp"
         android:layout_marginTop="24dp"
         android:drawableLeft="@drawable/outline_access_time_black_24"
-        android:hint="Time"
         app:layout_constraintEnd_toEndOf="@+id/console_tv"
         app:layout_constraintHorizontal_bias="0.96"
         app:layout_constraintStart_toEndOf="@+id/date_tv"

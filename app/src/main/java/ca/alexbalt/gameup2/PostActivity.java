@@ -74,11 +74,9 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
         postButton = findViewById(R.id.post_to_home);
 
-
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mEventsReference = mFirebaseDatabase.getReference().child("events");
-
 
         descEditText = findViewById(R.id.desc_tv);
         titleText = findViewById(R.id.title_tv);
@@ -119,31 +117,21 @@ public class PostActivity extends AppCompatActivity {
         currentTime = Calendar.getInstance();
         hour = currentTime.get(Calendar.HOUR_OF_DAY);
         minute = currentTime.get(Calendar.MINUTE);
-
         selectedTimeFormat(hour);
-
         mDisplayDate = (TextView) findViewById(R.id.tvDate);
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
 
             public void onClick(View view) {
-
                 Calendar cal = Calendar.getInstance();
-
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(
                         PostActivity.this,
-
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-
-                        mDateSetListener,
-
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,mDateSetListener,
                         year,month,day);
-
-
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -166,15 +154,12 @@ public class PostActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-
                 TimePickerDialog timePickerDialog = new TimePickerDialog(PostActivity.this, new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         selectedTimeFormat(hourOfDay);
                         tv.setText( hourOfDay + " : " + minute + " " + format);
-                        tv2.setHint(" ");
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
@@ -184,22 +169,17 @@ public class PostActivity extends AppCompatActivity {
     }
 
     public void selectedTimeFormat(int hour){
-
         if(hour == 0){
             hour += 12;
             format = "AM";
-
         }else if(hour == 12){
             format = "PM";
-
         }else if(hour > 12){
             hour -= 12;
             format = "PM";
-
         }else{
             format = "AM";
         }
-
     }
 
 
@@ -209,8 +189,7 @@ public class PostActivity extends AppCompatActivity {
         c = consoleText.getText().toString();
         game = gameText.getText().toString();
         date = dateText.getText().toString();
-        String time = "1:00";
-        //joinedList.add("");
+        time = tv.getText().toString();
 
         if(!TextUtils.isEmpty(b)){
             FirebaseDatabase database = FirebaseDatabase.getInstance();
