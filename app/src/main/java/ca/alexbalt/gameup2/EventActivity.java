@@ -45,7 +45,7 @@ public class EventActivity extends AppCompatActivity {
     private DatabaseReference mPostReference;
     private FirebaseAuth mFirebaseAuth;
     private String mUsername, key, userkey;
-    TextView titleTextView, consoleTextView, gameTextView;
+    TextView titleTextView, consoleTextView, gameTextView, timeTextView;
     TextView dateTextView, creatorTextView, descTextView;
     ListView joinedListView;
     List<String> listString;
@@ -70,6 +70,8 @@ public class EventActivity extends AppCompatActivity {
         consoleTextView = findViewById(R.id.consoleTV);
         gameTextView = findViewById(R.id.gameTV);
         dateTextView = findViewById(R.id.dateTV);
+        timeTextView = findViewById(R.id.timeTV);
+
         creatorTextView = findViewById(R.id.creatorTV);
         descTextView = findViewById(R.id.descTV);
         joinedListView = findViewById(R.id.joinedLV);
@@ -109,6 +111,7 @@ public class EventActivity extends AppCompatActivity {
                 dateTextView.setText(Event.date);
                 creatorTextView.setText(Event.creator);
                 descTextView.setText(Event.body);
+                timeTextView.setText(Event.time);
                 listString.clear();
                 listString = Event.getJoinedList();
                 sizeOfList = listString.size();

@@ -174,7 +174,6 @@ public class PostActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         selectedTimeFormat(hourOfDay);
                         tv.setText( hourOfDay + " : " + minute + " " + format);
-                        tv2.setHint(" ");
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
@@ -209,7 +208,7 @@ public class PostActivity extends AppCompatActivity {
         c = consoleText.getText().toString();
         game = gameText.getText().toString();
         date = dateText.getText().toString();
-        String time = "1:00";
+        time = tv.getText().toString();
         //joinedList.add("");
 
         if(!TextUtils.isEmpty(b)){
