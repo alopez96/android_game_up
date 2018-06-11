@@ -116,12 +116,18 @@ public class EditEventActivity extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         Toast.makeText(this, "changes submitted",Toast.LENGTH_SHORT).show();
+        EditEventActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
 
     }
 
 
     public void cancelChanges(){
         Toast.makeText(this, "update cancelled",Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        EditEventActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+    }
     }
 
-}

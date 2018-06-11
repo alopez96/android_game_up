@@ -10,7 +10,7 @@
         android:centerY=".35"
         android:startColor="@color/colorAccent"
         android:endColor="@color/colorAccent"
-         />
+        />
 
     <size
         android:width="100dp"

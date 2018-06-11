@@ -1,14 +1,22 @@
 package ca.alexbalt.gameup2;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -22,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
 public class PostActivity extends AppCompatActivity {
     private Button postButton;
@@ -34,8 +43,9 @@ public class PostActivity extends AppCompatActivity {
     private EditText consoleText;
     private EditText gameText;
     private EditText dateText;
+    private EditText timeText;
     private EditText idText;
-    private String a, b, c, game, date, creator;
+    private String a, b, c, game, date, creator, time;
     private String uid;
     private String mUserEmail;
     private String mUsername;
@@ -47,6 +57,16 @@ public class PostActivity extends AppCompatActivity {
     private User thisUser;
     private ArrayList<String> eventsCreated = new ArrayList<>();
     private ArrayList<String> joinedList = new ArrayList<>();
+
+    private static final String TAG = "PostActivity";
+    private TextView mDisplayDate;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+
+    TextView tv,tv2;
+    Calendar currentTime;
+    int hour;
+    int minute;
+    String format;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +84,7 @@ public class PostActivity extends AppCompatActivity {
         titleText = findViewById(R.id.title_tv);
         consoleText = findViewById(R.id.console_tv);
         gameText = findViewById(R.id.game_tv);
-        dateText = findViewById(R.id.date_tv);
+        dateText = findViewById(R.id.tvDate);
 
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         mUsername = user.getDisplayName();
@@ -93,6 +113,92 @@ public class PostActivity extends AppCompatActivity {
                 openPostActivity();
             }
         });
+
+        tv = (TextView) findViewById(R.id.time_button);
+        tv2 = (TextView) findViewById(R.id.time);
+        currentTime = Calendar.getInstance();
+        hour = currentTime.get(Calendar.HOUR_OF_DAY);
+        minute = currentTime.get(Calendar.MINUTE);
+
+        selectedTimeFormat(hour);
+
+        mDisplayDate = (TextView) findViewById(R.id.tvDate);
+        mDisplayDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+
+            public void onClick(View view) {
+
+                Calendar cal = Calendar.getInstance();
+
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(
+                        PostActivity.this,
+
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+
+                        mDateSetListener,
+
+                        year,month,day);
+
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+
+        });
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
+                String date = month + "/" + day + "/" + year;
+                mDisplayDate.setText(date);
+            }
+
+        };
+
+        tv.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(PostActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        selectedTimeFormat(hourOfDay);
+                        tv.setText( hourOfDay + " : " + minute + " " + format);
+                        tv2.setHint(" ");
+                    }
+                }, hour, minute, true);
+                timePickerDialog.show();
+            }
+        });
+
+    }
+
+    public void selectedTimeFormat(int hour){
+
+        if(hour == 0){
+            hour += 12;
+            format = "AM";
+
+        }else if(hour == 12){
+            format = "PM";
+
+        }else if(hour > 12){
+            hour -= 12;
+            format = "PM";
+
+        }else{
+            format = "AM";
+        }
 
     }
 

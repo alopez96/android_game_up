@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class AccountActivity extends AppCompatActivity {
-    private static final String TAG = "main_activity";
+    private static final String TAG = "Account_activity";
     private TextView nameTextView;
     private TextView emailTextView;
 

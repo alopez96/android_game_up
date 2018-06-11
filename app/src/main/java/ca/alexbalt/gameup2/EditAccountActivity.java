@@ -95,11 +95,15 @@ public class EditAccountActivity extends AppCompatActivity{
         Toast.makeText(this, "account updated",Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, AccountActivity.class);
         startActivity(i);
+        EditAccountActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
     }
 
     public void cancelChanges(){
         Toast.makeText(this, "update cancelled",Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, AccountActivity.class);
         startActivity(i);
+        EditAccountActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
     }
 }
