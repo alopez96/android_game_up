@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -48,7 +49,7 @@ public class EventActivity extends AppCompatActivity {
     TextView dateTextView, creatorTextView, descTextView;
     ListView joinedListView;
     List<String> listString;
-    private Button joinButton;
+    private Button joinButton, editButton;
     private String userEmail, bio, favGames, uid;
     private ArrayList<String> friends = new ArrayList<>();
     private ArrayList<String> eventsJoined = new ArrayList<>();
@@ -57,6 +58,8 @@ public class EventActivity extends AppCompatActivity {
     private boolean exist = false;
     List<User> userList;
     public User userData;
+    List<String> xList;
+    int sizeOfList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,8 @@ public class EventActivity extends AppCompatActivity {
         listString = new ArrayList<>();
         userList = new ArrayList<>();
         joinButton = findViewById(R.id.joinB);
+        editButton = findViewById(R.id.editB);
+        xList = new ArrayList<>();
 
         //ListView list = findViewById(R.id.event_post);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -94,37 +99,45 @@ public class EventActivity extends AppCompatActivity {
         mUsersReference = mFirebaseDatabase.getReference().child("users");
         specificUserRef = mUsersReference.child(uid);
 
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
         specificEventRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                    Event = dataSnapshot.getValue(event.class);
-                    titleTextView.setText(Event.title);
-                    consoleTextView.setText(Event.console);
-                    gameTextView.setText(Event.game);
-                    dateTextView.setText(Event.date);
-                    creatorTextView.setText(Event.creator);
-                    descTextView.setText(Event.body);
-                    listString.clear();
-                    listString = Event.getJoinedList();
-                    int sizeOfList = Event.getJoinedList().size();
-                    for(int i = 0; i < sizeOfList; i++){
-                        User userdata = new User();
-                        userdata.userName = listString.get(i);
-                        //userdata.uid =
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(EventActivity.this, android.R.layout.simple_list_item_1, listString);
-                    joinedListView.setAdapter(adapter);
+                Event = dataSnapshot.getValue(event.class);
+                titleTextView.setText(Event.title);
+                consoleTextView.setText(Event.console);
+                gameTextView.setText(Event.game);
+                dateTextView.setText(Event.date);
+                creatorTextView.setText(Event.creator);
+                descTextView.setText(Event.body);
+                listString.clear();
+                listString = Event.getJoinedList();
+                sizeOfList = listString.size();
+                Log.i("size1", "size of = " + sizeOfList);
+                for(int i = 0; i < sizeOfList; i++){
+                    User userdata = new User();
+                    userdata.userName = listString.get(i);
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(EventActivity.this, android.R.layout.simple_list_item_1, listString);
+                joinedListView.setAdapter(adapter);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+        Log.i("size3", "size of = " + sizeOfList);
 
+
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         specificUserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -151,6 +164,32 @@ public class EventActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+        /*
+        Log.i("size2", "size of = " + sizeOfList);
+
+        for(int i = 0; i < sizeOfList; i++){
+            specificUserRef = mUsersReference.child(listString.get(i));
+            specificUserRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User tempUser = dataSnapshot.getValue(User.class);
+                    String tempName = tempUser.getUserName();
+                    xList.add(tempName);
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("DATABASE ERROR");
+                }
+            });
+        }*/
+        //ArrayAdapter adapter2 = new ArrayAdapter(EventActivity.this, android.R.layout.simple_list_item_1, xList);
+        //joinedListView.setAdapter(adapter2);
+        //ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(EventActivity.this, android.R.layout.simple_list_item_1, xList);
+        //joinedListView.setAdapter(adapter2);
+
+
+
 
         // Set an OnItemClickListener for each of the list items
         final Context context = this;
@@ -192,6 +231,27 @@ public class EventActivity extends AppCompatActivity {
                 }
                 specificUserRef.child("eventsJoined").setValue(eventsJoined);
                 specificEventRef.child("joinedList").setValue(listString);
+            }
+        });
+
+
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("user", thisUser.userName);
+                Log.i("creator", Event.creator);
+                if (thisUser.userName == Event.creator) {
+                    Toast.makeText(EventActivity.this, "you can to edit this event", Toast.LENGTH_SHORT).show();
+                    Log.i("tag", "user matched creator");
+                } else {
+                    Toast.makeText(EventActivity.this, "you do not have access to edit this event", Toast.LENGTH_SHORT).show();
+                    Log.i("tag", "user did not matched creator");
+                }
+
+                Intent i = new Intent(EventActivity.this, EditEventActivity.class);
+                i.putExtra("key", Event.id);
+                startActivity(i);
             }
         });
 

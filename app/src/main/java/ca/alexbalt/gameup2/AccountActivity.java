@@ -27,8 +27,7 @@ public class AccountActivity extends AppCompatActivity {
     private TextView emailTextView;
 
 
-    private String mUsername;
-    private String mUserEmail;
+    private String mUsername, mUserEmail, uid;
     private Button editButton;
 
     private String mUserbio;
@@ -37,7 +36,7 @@ public class AccountActivity extends AppCompatActivity {
     TextView gameTextView, bioTextView;
 
     private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mUserReference;
+    private DatabaseReference mUsersReference, specificUserReference;
     private User thisUser;
 
     @Override
@@ -46,32 +45,29 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account);
 
         // Initialize references to views
-        nameTextView = (TextView) findViewById(R.id.user_name_tv);
-        emailTextView = (TextView) findViewById(R.id.user_email_tv);
-        bioTextView = (TextView) findViewById(R.id.user_bio_tv);
-        gameTextView = (TextView) findViewById(R.id.user_games_tv);
-
+        nameTextView = findViewById(R.id.user_name_tv);
+        emailTextView = findViewById(R.id.user_email_tv);
+        bioTextView = findViewById(R.id.user_bio_tv);
+        gameTextView = findViewById(R.id.user_games_tv);
         editButton = findViewById(R.id.edit_account_bt);
-
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mUsername = user.getDisplayName();
         mUserEmail = user.getEmail();
-
-
+        uid = user.getUid();
         nameTextView.setText(mUsername);
         emailTextView.setText(mUserEmail);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mUserReference = mFirebaseDatabase.getReference().child("users");
+        mUsersReference = mFirebaseDatabase.getReference().child("users");
+        specificUserReference = mUsersReference.child(uid);
 
-        mUserReference.addValueEventListener(new ValueEventListener() {
+        specificUserReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 thisUser = dataSnapshot.getValue(User.class);
                 bioTextView.setText(thisUser.bio);
                 gameTextView.setText(thisUser.favGames);
-
             }
 
             @Override
@@ -127,8 +123,6 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(i);
             }
             AccountActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-
         }
 
         if(id == R.id.action_account){

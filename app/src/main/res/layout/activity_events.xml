@@ -139,6 +139,12 @@
                 android:text="Join Event"
                 android:textColor="#000000" />
 
+            <Button
+                android:id="@+id/editB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit" />
+
             <ListView
                 android:id="@+id/joinedLV"
                 android:layout_width="match_parent"
