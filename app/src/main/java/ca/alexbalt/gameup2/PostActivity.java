@@ -195,7 +195,7 @@ public class PostActivity extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("events");
             String key = myRef.push().getKey();
-            eventsCreated.add(key);
+            eventsCreated.add(b);
             specificUserRef.child("eventsCreated").setValue(eventsCreated);
             event Event = new event(b, c, game, date, time, a, key, creator, joinedList);
             myRef.child(key).setValue(Event);

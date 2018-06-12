@@ -116,7 +116,6 @@ public class EditEventActivity extends AppCompatActivity {
         Toast.makeText(this, "changes submitted",Toast.LENGTH_SHORT).show();
         EditEventActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-
     }
 
 
