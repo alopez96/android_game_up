@@ -68,6 +68,7 @@ public class AccountActivity extends AppCompatActivity {
                 thisUser = dataSnapshot.getValue(User.class);
                 bioTextView.setText(thisUser.bio);
                 gameTextView.setText(thisUser.favGames);
+                nameTextView.setText(thisUser.userName);
             }
 
             @Override
@@ -81,6 +82,8 @@ public class AccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AccountActivity.this, EditAccountActivity.class);
                 intent.putExtra("bio", thisUser.bio);
+                intent.putExtra("favGames", thisUser.favGames);
+                intent.putExtra("userName",thisUser.userName);
                 startActivity(intent);
 
             }
