@@ -52,10 +52,10 @@ public class AccountActivity extends AppCompatActivity {
         editButton = findViewById(R.id.edit_account_bt);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        mUsername = user.getDisplayName();
+//        mUsername = user.getDisplayName();
         mUserEmail = user.getEmail();
         uid = user.getUid();
-        nameTextView.setText(mUsername);
+//        nameTextView.setText(mUsername);
         emailTextView.setText(mUserEmail);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -68,6 +68,7 @@ public class AccountActivity extends AppCompatActivity {
                 thisUser = dataSnapshot.getValue(User.class);
                 bioTextView.setText(thisUser.bio);
                 gameTextView.setText(thisUser.favGames);
+                nameTextView.setText(thisUser.userName);
             }
 
             @Override

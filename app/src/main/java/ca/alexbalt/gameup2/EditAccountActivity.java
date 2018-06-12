@@ -24,7 +24,7 @@ public class EditAccountActivity extends AppCompatActivity{
     private Button cancelButton;
 
     private EditText displayNameText, bioText, gamesText;
-    private String mUsername, mUserEmail, mBio, mFavGames, uid, userKey, bio;
+    private String mUsername, mUserEmail, mBio, mFavGames, uid, userKey, mName;
 
 
     private FirebaseAuth mFirebaseAuth;
@@ -43,7 +43,8 @@ public class EditAccountActivity extends AppCompatActivity{
 
         submitButton = findViewById(R.id.submit_bt);
         cancelButton = findViewById(R.id.cancel_submit_bt);
-//        displayNameText = findViewById(R.id.edit_display_name_tv);
+
+        displayNameText = findViewById(R.id.edit_display_name_tv);
         bioText = findViewById(R.id.edit_bio_tv);
         gamesText = findViewById(R.id.edit_games_tv);
 
@@ -51,8 +52,8 @@ public class EditAccountActivity extends AppCompatActivity{
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUsersReference = mFirebaseDatabase.getReference().child("users");
 
-        Intent intent = getIntent();
-        bio = intent.getStringExtra("bio");
+//        Intent intent = getIntent();
+//        bio = intent.getStringExtra("bio");
 //        bioText.setHint(getString(android.R.string.))
 
 
@@ -95,8 +96,11 @@ public class EditAccountActivity extends AppCompatActivity{
     public void submitChanges(){
         mBio = bioText.getText().toString();
         mFavGames = gamesText.getText().toString();
+        mName = displayNameText.getText().toString();
+
         specificUserRef.child("bio").setValue(mBio);
         specificUserRef.child("favGames").setValue(mFavGames);
+        specificUserRef.child("userName").setValue(mName);
         Toast.makeText(this, "account updated",Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, AccountActivity.class);
         startActivity(i);
