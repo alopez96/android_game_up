@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private DatabaseReference mUserReference;
+    private DatabaseReference mUserReference, specificUserReference;
     public static final int RC_SIGN_IN = 1;     ///request code
     private String mUsername, mUserEmail, bio, favGames, uid, key;
     private ArrayList<String> friends = new ArrayList<>();
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         mEventsReference = mFirebaseDatabase.getReference().child("events");
         eventList = new ArrayList<>();
        // bio = "";
+        uid = "";
         //favGames = "";
         //friends.add("");
         //eventsJoined.add("");
@@ -80,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mUserReference = mFirebaseDatabase.getReference().child("users");
 
+
+
+
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -90,12 +94,26 @@ public class MainActivity extends AppCompatActivity {
                     mUsername = user.getDisplayName();
                     mUserEmail = user.getEmail();
                     uid = user.getUid();
-                    key = mUserReference.push().getKey();
 
-                    if (user.getUid() != null){
-                        User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, eventsCreated, uid, key);
-//                        mUserReference.child(uid).setValue(currentUser);
-                    }
+                    mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChild(uid)) {
+                                Log.i("test call", "user exists");
+                            }
+                            else{
+                                Log.i("test call2", "user does not exist");
+                                key = mUserReference.push().getKey();
+                                User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, eventsCreated, uid, key);
+                                mUserReference.child(uid).setValue(currentUser);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
                 else {
                     //user is signed out
