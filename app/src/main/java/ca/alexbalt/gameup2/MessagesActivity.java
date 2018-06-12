@@ -171,7 +171,6 @@ public class MessagesActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null){
                     //user is signed in
-                    Toast.makeText(MessagesActivity.this,"Now signed in!", Toast.LENGTH_SHORT).show();
                     onSignedInInitialize(user.getDisplayName());
                 }
                 else {

@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mEventsReference = mFirebaseDatabase.getReference().child("events");
         eventList = new ArrayList<>();
-       // bio = "";
+        bio = "";
         uid = "";
-        //favGames = "";
+        favGames = "";
         //friends.add("");
         //eventsJoined.add("");
 
@@ -98,17 +98,16 @@ public class MainActivity extends AppCompatActivity {
                     mUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.hasChild(uid)) {
-                                Log.i("test call", "user exists");
+                            if (dataSnapshot.hasChild(uid)){
+                                Log.i("check if user exists", "user exists");
                             }
                             else{
-                                Log.i("test call2", "user does not exist");
+                                Log.i("check if user exists", "user does not exist");
                                 key = mUserReference.push().getKey();
                                 User currentUser = new User(mUsername, mUserEmail, bio, favGames, friends, eventsJoined, eventsCreated, uid, key);
                                 mUserReference.child(uid).setValue(currentUser);
                             }
                         }
-
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
@@ -171,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
                 event selected = eventList.get(position);
                 Intent detailIntent = new Intent(MainActivity.this, EventActivity.class);
                 detailIntent.putExtra("data", selected.id);
-                Toast.makeText(MainActivity.this, "event key " + selected.id, Toast.LENGTH_SHORT).show();
                 startActivity(detailIntent);
                 }
             });
