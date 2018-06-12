@@ -136,7 +136,7 @@ public class EditEventActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         selectedTimeFormat(hourOfDay);
-                        timebtn.setText( hourOfDay + " : " + minute + " " + format);
+                        timeText.setText( hourOfDay + " : " + minute + " " + format);
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
@@ -217,7 +217,7 @@ public class EditEventActivity extends AppCompatActivity {
         mConsole = consoleText.getText().toString();
         mGame = gameText.getText().toString();
         mDate = dateText.getText().toString();
-        mTime = timebtn.getText().toString();
+        mTime = timeText.getText().toString();
         mBody = bodyText.getText().toString();
 
         specificEventRef.child("title").setValue(mTitle);

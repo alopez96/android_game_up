@@ -154,11 +154,13 @@
 
     <TextView
         android:id="@+id/time_bttn"
-        android:layout_width="104dp"
-        android:layout_height="36dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="290dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="21dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextTime"
-        app:layout_constraintTop_toTopOf="@+id/editTextTime" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
 </android.support.constraint.ConstraintLayout>
