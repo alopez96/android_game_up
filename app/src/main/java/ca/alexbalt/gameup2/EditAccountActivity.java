@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +25,9 @@ public class EditAccountActivity extends AppCompatActivity{
     private Button cancelButton;
 
     private EditText displayNameText, bioText, gamesText;
-    private String mUsername, mUserEmail, mBio, mFavGames, uid, userKey;
+
+
+    private String mUsername, mUserEmail, mBio, mFavGames, uid, userKey, bio, favGames, mName, userName;
 
 
     private FirebaseAuth mFirebaseAuth;
@@ -43,6 +46,7 @@ public class EditAccountActivity extends AppCompatActivity{
 
         submitButton = findViewById(R.id.submit_bt);
         cancelButton = findViewById(R.id.cancel_submit_bt);
+
         displayNameText = findViewById(R.id.edit_display_name_tv);
         bioText = findViewById(R.id.edit_bio_tv);
         gamesText = findViewById(R.id.edit_games_tv);
@@ -50,6 +54,18 @@ public class EditAccountActivity extends AppCompatActivity{
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUsersReference = mFirebaseDatabase.getReference().child("users");
+
+
+        Intent intent = getIntent();
+        bio = intent.getStringExtra("bio");
+        favGames = intent.getStringExtra("favGames");
+        userName = intent.getStringExtra("userName");
+
+        bioText.setText(bio, TextView.BufferType.EDITABLE);
+        gamesText.setText(favGames, TextView.BufferType.EDITABLE);
+        displayNameText.setText(userName, TextView.BufferType.EDITABLE);
+
+
 
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         mUsername = user.getDisplayName();
@@ -88,10 +104,18 @@ public class EditAccountActivity extends AppCompatActivity{
 
 
     public void submitChanges(){
+        mName = displayNameText.getText().toString();
         mBio = bioText.getText().toString();
         mFavGames = gamesText.getText().toString();
+
+        mName = displayNameText.getText().toString();
+
+
+        specificUserRef.child("userName").setValue(mName);
+
         specificUserRef.child("bio").setValue(mBio);
         specificUserRef.child("favGames").setValue(mFavGames);
+        specificUserRef.child("userName").setValue(mName);
         Toast.makeText(this, "account updated",Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, AccountActivity.class);
         startActivity(i);

@@ -8,17 +8,21 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#301c363a"
     tools:context=".MessagesActivity">
 
     <ListView
         android:id="@+id/messageListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout"
-        android:stackFromBottom="true"
+        android:layout_width="368dp"
+        android:layout_height="514dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
         android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
-        tools:listitem="@layout/item_message"/>
+        tools:listitem="@layout/item_message" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -27,6 +31,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:background="#c3c3c3"
         android:orientation="horizontal">
 
         <ImageButton

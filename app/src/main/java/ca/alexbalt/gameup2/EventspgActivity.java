@@ -20,8 +20,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class EventspgActivity extends AppCompatActivity {
     private static final String TAG = "main_activity";
@@ -50,9 +54,8 @@ public class EventspgActivity extends AppCompatActivity {
         specificUserRef = mUsersReference.child(uid);
     }
 
-
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
 
         specificUserRef.addValueEventListener(new ValueEventListener() {
@@ -66,12 +69,16 @@ public class EventspgActivity extends AppCompatActivity {
                 ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(EventspgActivity.this, android.R.layout.simple_list_item_1, eventsCreated);
                 CreatedList.setAdapter(adapter2);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
     }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
