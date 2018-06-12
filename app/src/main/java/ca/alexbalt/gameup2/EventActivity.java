@@ -254,6 +254,12 @@ public class EventActivity extends AppCompatActivity {
 
                 Intent i = new Intent(EventActivity.this, EditEventActivity.class);
                 i.putExtra("key", Event.id);
+                i.putExtra("title", Event.title);
+                i.putExtra("console", Event.console);
+                i.putExtra("game", Event.game);
+                i.putExtra("date", Event.date);
+                i.putExtra("time", Event.time);
+                i.putExtra("body", Event.body);
                 startActivity(i);
             }
         });

@@ -36,7 +36,7 @@ public class EditEventActivity extends AppCompatActivity {
 
     private EditText titleText, consoleText, gameText, dateText, timeText, bodyText;
     private String mUsername, mUserEmail, mTitle, mConsole, mGame, mDate, mTime, mBody, eventkey;
-
+    private String stitle, sconsole,sgame, sdate, stime, sbody;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mEventsReference;
@@ -145,6 +145,21 @@ public class EditEventActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         eventkey = intent.getStringExtra("key");
+        stitle = intent.getStringExtra("title");
+        sconsole = intent.getStringExtra("console");
+        sgame = intent.getStringExtra("game");
+        sdate = intent.getStringExtra("date");
+        stime = intent.getStringExtra("time");
+        sbody = intent.getStringExtra("body");
+
+        titleText.setText(stitle, TextView.BufferType.EDITABLE);
+        consoleText.setText(sconsole, TextView.BufferType.EDITABLE);
+        gameText.setText(sgame, TextView.BufferType.EDITABLE);
+        dateText.setText(sdate, TextView.BufferType.EDITABLE);
+        timeText.setText(stime, TextView.BufferType.EDITABLE);
+        bodyText.setText(sbody, TextView.BufferType.EDITABLE);
+
+
         if (eventkey == null) {
             throw new IllegalArgumentException("Must pass EVENT KEY VALUE");
         }
