@@ -227,7 +227,7 @@ public class EventActivity extends AppCompatActivity {
                     }
                 }
                 if(!exist) {
-                    listString.add(uid);
+                    listString.add(mUsername);
                     specificEventRef.child("joinedList").setValue(listString);
                     eventsJoined.add(Event.title);
                     Toast.makeText(EventActivity.this, "you have joined event " + titleTextView.getText().toString(), Toast.LENGTH_SHORT).show();
