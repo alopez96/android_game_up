@@ -1,5 +1,12 @@
 package ca.alexbalt.gameup2;
 
+//****************************************
+//GAME UP
+//Arturo Lopez
+//Christian Hernandez
+//Alexsandrua Baltezar
+//****************************************
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
